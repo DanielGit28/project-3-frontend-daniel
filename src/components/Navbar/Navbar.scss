@@ -1,0 +1,69 @@
+.nav {
+    &__root {
+        position: fixed;
+        z-index: 0;
+        
+        opacity: 1;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+    }
+    &__cnt {
+        //Nav close and open nav block
+        &-activate {
+            z-index: 2;
+            width: 8vw;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 0.0625rem solid $nav-background-low-opacity;
+            &__icon {
+                &-cnt {
+                }
+            }
+        }
+        //Nav block with the links info
+        &-open {
+            //animation: slide-in 2s ease;  
+            transform: translateX(-100%);
+            background-color: white;
+            //z-index: 3;
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            &__header {
+            }
+            &__logo {
+            }
+
+            &__links {
+                &-cnt {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                &--link {
+                }
+            }
+            &__social-links {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &-cnt {
+                }
+                &--link {
+                }
+            }
+        }
+    }
+}
+
+.add-background {
+    background-color: $nav-background-low-opacity;
+}
+
+@include slide-animation-mixin(slide-in, -100%, 0);
+

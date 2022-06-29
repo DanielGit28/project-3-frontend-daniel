@@ -1,0 +1,22 @@
+//Slide animation mixin
+@mixin slide-animation-mixin($name, $from, $to) {
+    @keyframes #{$name} {
+        0% {
+            transform: translateX($from);
+        }
+        100% {
+            transform: translateX($to);
+        }
+    }
+}
+
+@mixin opacity-animation-mixin($name, $start-opacity, $end-opacity) {
+    @keyframes #{$name} {
+        0% {
+            opacity: $start-opacity;
+        }
+        100% {
+            opacity: $end-opacity;
+        }
+    }
+}

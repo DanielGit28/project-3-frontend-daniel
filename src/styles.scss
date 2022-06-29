@@ -1,12 +1,21 @@
 //Constants
+@import "./components/styles/constants/colors.scss";
 
 
 //Mixins
+@import "./components/mixins/mixins.scss";
+
+
 
 
 //Components
+@import "./components/Navbar/Navbar.scss";
+@import "./components/SignUp/Signup.scss";
+@import "./components/Login/Login.scss";
 
 
+//Animations
+@import "./components/styles/animations/animations.scss";
 
 //Base
 @import "./base.scss";

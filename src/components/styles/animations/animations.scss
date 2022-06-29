@@ -1,0 +1,23 @@
+//For navbar
+.slide-in-100 {
+    animation: slide-in 2s ease; 
+    transform: translateX(0);
+
+}
+.slide-out-100 {
+    animation: slide-out 2s ease;  
+    transform: translateX(-100%);
+
+}
+
+.add-opacity-background {
+    animation: opacity-in 2s ease ; 
+}
+.remove-opacity-background {
+    animation: opacity-out 2s ease;
+}
+
+@include opacity-animation-mixin(opacity-in, 0, 1);
+@include opacity-animation-mixin(opacity-out, 1, 0);
+@include slide-animation-mixin(slide-in, -100%, 0);
+@include slide-animation-mixin(slide-out, 0, -100%);
