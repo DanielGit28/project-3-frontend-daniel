@@ -1,43 +1,71 @@
 .nav {
     &__root {
-        position: fixed;
         z-index: 0;
-        
+        position: fixed;
         opacity: 1;
         display: flex;
-        width: 100vw;
-        height: 100vh;
+        width: 0;
+        transition: width 1s ease;
+        height: 10vh;
+        @media (min-width: $tablet-bkp) {
+            height: 100vh;
+        }
+            
     }
+
     &__cnt {
+
         //Nav close and open nav block
         &-activate {
             z-index: 2;
-            width: 8vw;
+            //padding: 4vw;
             background-color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             border-right: 0.0625rem solid $nav-background-low-opacity;
+
             &__icon {
+                width: 4vw;
+                height: 4vw;
+                //transition: opacity 0.5s ease;
+                &:hover {
+                    opacity: 0.5;
+                    cursor: pointer;
+                }
                 &-cnt {
+                    background-color: transparent;
+                    border: 0;
+                    width: 9vw;
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
             }
         }
+
         //Nav block with the links info
         &-open {
             //animation: slide-in 2s ease;  
-            transform: translateX(-100%);
             background-color: white;
-            //z-index: 3;
-            width: 35%;
+            height: 100vh;
+            z-index: -1;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            &__header {
+            transform: translateX(-60vw);
+            &__info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 40vw;
+
             }
-            &__logo {
-            }
+
+
+
+            &__header {}
+
+            &__logo {}
 
             &__links {
                 &-cnt {
@@ -45,17 +73,18 @@
                     align-items: center;
                     justify-content: center;
                 }
-                &--link {
-                }
+
+                &--link {}
             }
+
             &__social-links {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                &-cnt {
-                }
-                &--link {
-                }
+
+                &-cnt {}
+
+                &--link {}
             }
         }
     }
@@ -66,4 +95,3 @@
 }
 
 @include slide-animation-mixin(slide-in, -100%, 0);
-

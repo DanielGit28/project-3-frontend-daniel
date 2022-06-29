@@ -20,3 +20,16 @@
         }
     }
 }
+
+@mixin background-opacity-animation-mixin($name) {
+    @keyframes #{$name} {
+        0% {
+            width: 100vw;
+            opacity: 1;
+            background-color: $nav-background-low-opacity;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+}

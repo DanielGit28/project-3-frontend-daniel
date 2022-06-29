@@ -10,7 +10,7 @@ const App = (props) => {
       <Navbar navOpen={false} />
       {container === "Home" &&
 
-        <div>
+        <div className="app-cnt">
           <div className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
@@ -20,14 +20,13 @@ const App = (props) => {
         </div>
       }
       {container === "Login" &&
-        <div>
+        <div className="app-cnt" >
           <Login />
         </div>
 
       }
       {container === "Signup" &&
-        <div>
-          
+        <div className="app-cnt">
           <Signup />
         </div>
       }
