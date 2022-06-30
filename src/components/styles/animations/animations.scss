@@ -1,15 +1,27 @@
 //For navbar
 .slide-in-100 {
-    animation: slide-in 1s ease; 
     transform: translateX(0);
+    
+    animation: slide-in-100 1s ease; 
+    
 
 }
 .slide-out-100 {
-    animation: slide-out 1s ease;  
+    animation: slide-out-100 1s ease;  
     
+    transform: translateX(-100vw);
+
+}
+.slide-in-40 {
+    transform: translateX(0);
+    animation: slide-in-40 1s ease; 
+}
+.slide-out-40 {
+    animation: slide-out-40 1s ease;  
     transform: translateX(-40vw);
 
 }
+
 
 .add-opacity-background {
     background-color: $nav-background-low-opacity;
@@ -23,6 +35,10 @@
 
 @include opacity-animation-mixin(opacity-in, 0, 1);
 @include opacity-animation-mixin(opacity-out, 1, 0);
-@include slide-animation-mixin(slide-in, -40vw, 0);
-@include slide-animation-mixin(slide-out, 0, -40vw);
+//Slides
+@include slide-animation-mixin(slide-in-100, -100vw, 0);
+@include slide-animation-mixin(slide-out-100, 0, -100vw);
+@include slide-animation-mixin(slide-in-40, -40vw, 0);
+@include slide-animation-mixin(slide-out-40, 0, -40vw);
+//Background
 @include background-opacity-animation-mixin(back-out);

@@ -5,16 +5,15 @@
         opacity: 1;
         display: flex;
         width: 0;
-        transition: width 1s ease;
         height: 10vh;
+        transition: width height 0.5s ease;
+        transition: height 0.5s ease;
         @media (min-width: $tablet-bkp) {
             height: 100vh;
         }
-            
     }
 
     &__cnt {
-
         //Nav close and open nav block
         &-activate {
             z-index: 2;
@@ -24,7 +23,7 @@
             align-items: center;
             justify-content: center;
             border-right: 0.0625rem solid $nav-background-low-opacity;
-
+            border-bottom: 0.0625rem solid $nav-background-low-opacity;
             &__icon {
                 width: 4vw;
                 height: 4vw;
@@ -36,7 +35,11 @@
                 &-cnt {
                     background-color: transparent;
                     border: 0;
-                    width: 9vw;
+                    width: 20vw;
+                    transition: width 0.5s ease;
+                    @media (min-width: $tablet-bkp) {
+                        width: 10vw;
+                    }
                     &:hover {
                         cursor: pointer;
                     }
@@ -46,35 +49,70 @@
 
         //Nav block with the links info
         &-open {
-            //animation: slide-in 2s ease;  
+            transition: position 0.5s ease;
+            transition: width 0.5s ease;
             background-color: white;
             height: 100vh;
             z-index: -1;
             display: flex;
-            transform: translateX(-60vw);
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            transform: translateX(-100vw);
+            width: 100vw;
             &__info {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                width: 40vw;
-
+                width: 100%;
+                position: fixed;
+                z-index: 1;
+                height: inherit;
             }
 
+            &__header {
+                height: calc(100vh / 3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-
-            &__header {}
-
-            &__logo {}
+            &__logo {
+                font-size: 2.5rem;
+            }
 
             &__links {
+                width: 100vw;
+                display: flex;
+                justify-content: space-around;
                 &-cnt {
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    height: calc(100vh / 3);
+                    width: 90vw;
+                    @media (min-width: $tablet-bkp) {
+                        width: 30vw;
+                    }
                 }
 
-                &--link {}
+                &--link {
+                    color: black;
+                    padding: 0.2rem 0;
+                    font-size: 2rem;
+                    transition: font-size 0.5s ease;
+                    transition: text-decoration 0.5s ease;
+                    text-underline-offset: var(--offset, 0.2em);
+                    --offset: 0.4em;
+                    text-decoration: underline 0.15rem rgba(255, 255, 255, 0);
+                    transition: text-underline-offset 0.3s, text-decoration-color 0.3s;
+                    &:hover {
+                        text-decoration-color: $beige;
+                        text-underline-offset: 0.4em;
+                    }
+                    
+                }
             }
 
             &__social-links {
@@ -82,9 +120,22 @@
                 align-items: center;
                 justify-content: center;
 
-                &-cnt {}
+                &-cnt {
+                    height: calc(100vh / 3);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
 
-                &--link {}
+                &--link {
+                    font-size: 2rem;
+                    margin: 0 1rem;
+                    color: black;
+                    transition: color 0.3s ease;
+                    &:hover {
+                        color: $beige;
+                    }
+                }
             }
         }
     }
@@ -92,6 +143,21 @@
 
 .add-background {
     background-color: $nav-background-low-opacity;
+}
+.full-height {
+    height: 100vh;
+}
+.width-40 {
+    width: 40vh;
+}
+.position-absolute {
+    position: absolute;
+}
+
+.beige-active-underline {
+    text-decoration: underline 0.15rem;
+    text-decoration-color: $beige;
+    text-underline-offset: 0.4em;
 }
 
 @include slide-animation-mixin(slide-in, -100%, 0);

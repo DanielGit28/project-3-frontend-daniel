@@ -1,0 +1,19 @@
+.home {
+    &__root {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 140vh;
+        background-color: $beige;
+        
+    }
+    &__cnt {
+        width: 100%;
+        
+        & p {
+            color: black;
+        }
+    }
+}
