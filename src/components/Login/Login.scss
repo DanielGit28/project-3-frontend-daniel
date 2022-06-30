@@ -1,0 +1,108 @@
+.login {
+    &__root {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+    &__cnt {
+        &--left {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 35%;
+            background-color: $low-beige;
+            color: black;
+        }
+        &--right {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 65%;
+            background-color: white;
+            color: black;
+        }
+    }
+    &__sub-cnt {
+        width: 75%;
+        height: 80%;
+        box-shadow: $brown 5px 5px 10px;
+        &__error {
+            width: 70%;
+            background-color: rgb(255, 73, 73);
+            margin: 7.5% 0;
+            padding: 5%;
+            text-align: center;
+            &--text {
+                font-size: 1.5rem;
+                color: white;
+            }
+        }
+        &--left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: $low-beige;
+            box-shadow: $brown -5px 5px 10px;
+            transition: 1s ease-in-out;
+            &:hover {
+                transform: translateY(35%);
+            }
+            &:active {
+                transform: translateY(0);
+            }
+        }
+        &--right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            transition: 1s ease-in-out;
+            //&:hover {transform: translateX(35%); }
+            
+        }
+        &__cnt {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 70%;
+            height: 7.5rem;
+            margin-bottom: 5%;
+            
+        }
+        &__title {
+            font-size: 3rem;
+        }
+        &__subtitle {
+            font-size: 2.2rem;
+        }
+        &__lbl {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        &__inp {
+            width: 100%;
+            
+            padding: 4% 2.5%;
+            margin-top: 0.4rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.2rem;
+        }
+        &__submit {
+            margin-top: 5%;
+            width: 70%;
+            background-color: $brown;
+            padding: 3%;
+            font-size: 1.2rem;
+            color: white;
+            border: 0;
+            &:hover {
+                
+                background-color: black;
+            }
+        }
+    }
+}

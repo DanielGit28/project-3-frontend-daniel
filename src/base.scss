@@ -1,3 +1,9 @@
+html {
+  box-sizing: border-box;
+}
+*,*::after, *::before {
+  box-sizing: inherit;
+}
 .app {
   text-align: center;
   width: 100%;

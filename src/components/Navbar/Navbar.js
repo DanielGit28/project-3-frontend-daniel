@@ -47,7 +47,6 @@ const Navbar = (props) => {
             }
             navRoot.current.classList.remove("add-opacity-background");
             navRoot.current.classList.add("remove-opacity-background");
-
         }
     }
 
@@ -60,12 +59,26 @@ const Navbar = (props) => {
         if (breakPoint[0] > 768) {
             navInfo.current.classList.add("width-40");
             navInfo.current.classList.remove("position-absolute");
+            if(isNavOpen) {
+                navRoot.current.classList.add("add-opacity-background");
+            }
+            
         } else {
             navInfo.current.classList.remove("slide-in-40");
                 navInfo.current.classList.remove("slide-out-40");
             navInfo.current.classList.remove("width-40");
             navInfo.current.classList.add("position-absolute");
+            if(!isNavOpen) {
+                navRoot.current.classList.remove("add-opacity-background");
+                //navInfo.current.classList.remove("slide-out-40");
+            }
+            if(isNavOpen) {
+                navRoot.current.classList.remove("add-opacity-background");
+                navInfo.current.classList.add("slide-in-100");
+            }
         }
+
+        
 
         //Active links
         if (container === "Home") {
@@ -81,7 +94,7 @@ const Navbar = (props) => {
             navLogin.current.classList.remove("beige-active-underline");
             navSignup.current.classList.add("beige-active-underline");
         }
-    }, [navOpen, breakPoint, navLogo, container]);
+    }, [navOpen, breakPoint, navLogo, container,isNavOpen]);
 
     return (
         <div className="nav__root" ref={navRoot}>

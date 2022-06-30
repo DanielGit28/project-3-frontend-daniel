@@ -8,12 +8,15 @@
         height: 10vh;
         transition: width height 0.5s ease;
         transition: height 0.5s ease;
+        transition: opacity background-color .5s ease;
+
         @media (min-width: $tablet-bkp) {
             height: 100vh;
         }
     }
 
     &__cnt {
+
         //Nav close and open nav block
         &-activate {
             z-index: 2;
@@ -24,22 +27,35 @@
             justify-content: center;
             border-right: 0.0625rem solid $nav-background-low-opacity;
             border-bottom: 0.0625rem solid $nav-background-low-opacity;
+            width: 20vw;
+            transition: width 0.5s ease;
+
+            @media (min-width: $tablet-bkp) {
+                width: 9vw;
+            }
+
             &__icon {
                 width: 4vw;
                 height: 4vw;
+                
+
                 //transition: opacity 0.5s ease;
                 &:hover {
                     opacity: 0.5;
                     cursor: pointer;
                 }
+
                 &-cnt {
+                    padding: 0;
                     background-color: transparent;
                     border: 0;
                     width: 20vw;
                     transition: width 0.5s ease;
+
                     @media (min-width: $tablet-bkp) {
-                        width: 10vw;
+                        width: 9vw;
                     }
+
                     &:hover {
                         cursor: pointer;
                     }
@@ -51,6 +67,7 @@
         &-open {
             transition: position 0.5s ease;
             transition: width 0.5s ease;
+            transition: transform .5s ease;
             background-color: white;
             height: 100vh;
             z-index: -1;
@@ -60,13 +77,14 @@
             justify-content: space-around;
             transform: translateX(-100vw);
             width: 100vw;
+
             &__info {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 width: 100%;
-                position: fixed;
+                //position: fixed;
                 z-index: 1;
                 height: inherit;
             }
@@ -80,20 +98,28 @@
 
             &__logo {
                 font-size: 2.5rem;
+                @media (min-width: $tablet-bkp) {
+                    font-size: 3rem;
+                }
             }
 
             &__links {
                 width: 100vw;
                 display: flex;
                 justify-content: space-around;
+
                 &-cnt {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     height: calc(100vh / 3);
                     width: 90vw;
+
                     @media (min-width: $tablet-bkp) {
-                        width: 30vw;
+                        width: 100%;
+                    }
+                    @media (min-width: $desktop-bkp) {
+                       
                     }
                 }
 
@@ -107,11 +133,14 @@
                     --offset: 0.4em;
                     text-decoration: underline 0.15rem rgba(255, 255, 255, 0);
                     transition: text-underline-offset 0.3s, text-decoration-color 0.3s;
+                    @media (min-width: $tablet-bkp) {
+                        font-size: 2.5rem;
+                    }
                     &:hover {
                         text-decoration-color: $beige;
                         text-underline-offset: 0.4em;
                     }
-                    
+
                 }
             }
 
@@ -132,6 +161,7 @@
                     margin: 0 1rem;
                     color: black;
                     transition: color 0.3s ease;
+
                     &:hover {
                         color: $beige;
                     }
@@ -144,12 +174,15 @@
 .add-background {
     background-color: $nav-background-low-opacity;
 }
+
 .full-height {
     height: 100vh;
 }
+
 .width-40 {
     width: 40vh;
 }
+
 .position-absolute {
     position: absolute;
 }
