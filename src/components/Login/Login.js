@@ -49,7 +49,7 @@ const Login = () => {
         }
 
         if(formUserName.length > 0 && formPassword.length > 0) {
-            fetch('http://project-3-backend-daniel.herokuapp.com/users/login', {
+            fetch('https://project-3-backend-daniel.herokuapp.com/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', },
                 body: JSON.stringify(loginInfo)
