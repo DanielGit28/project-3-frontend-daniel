@@ -51,7 +51,7 @@ const Login = () => {
         if(formUserName.length > 0 && formPassword.length > 0) {
             fetch('https://project-3-backend-daniel.herokuapp.com/users/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(loginInfo)
             })
             .then((response) => response.json())
@@ -65,7 +65,8 @@ const Login = () => {
                 } else {
                     setError(false);
                     localStorage.setItem("JWT", JSON.stringify(data));
-                    //navigate("/bank-home");
+                    localStorage.setItem("userLoggedEmail", formUserName);
+                    navigate("/bank-home");
                 }
                 
             });
