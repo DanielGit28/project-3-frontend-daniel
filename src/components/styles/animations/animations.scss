@@ -22,6 +22,16 @@
 
 }
 
+.slide-in-100{
+    transform: translateX(0);
+    animation: slide-in-100 1s ease; 
+}
+.slide-out-100{
+    animation: slide-out-100 1s ease;  
+    //transform: translateX(-40vw);
+
+}
+
 
 .add-opacity-background {
     background-color: $nav-background-low-opacity;
@@ -40,6 +50,8 @@
 @include slide-animation-mixin(slide-out-100, 0, -100vw);
 @include slide-animation-mixin(slide-in-40, -40vw, 0);
 @include slide-animation-mixin(slide-out-40, 0, -40vw);
+@include slide-animation-mixin(slide-in-100, -100vw, 0);
+@include slide-animation-mixin(slide-out-100, 0, -100vw);
 //Background
 @include background-opacity-animation-mixin(back-out);
 @keyframes fadeInDown {

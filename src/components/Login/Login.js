@@ -98,8 +98,21 @@ const Login = (props) => {
                 
             }
         } else {
-            
-            
+            if(navState) {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.add("z-index-minus-1");
+                  }, 150);
+              
+                 return () => clearTimeout(timeout);
+                
+            } else {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.remove("z-index-minus-1");
+                  }, 300);
+              
+                 return () => clearTimeout(timeout);
+                
+            }
         }
         
     },[breakPoint])

@@ -1,0 +1,53 @@
+.dash-menu {
+    &__root {
+        display: flex;
+        
+        width: 100vw;
+        position: fixed;
+        height: 88vh;
+        top: 12vh;
+        
+        transition: height .5s ease;
+        transform: translateX(-100vw);
+        transition: transform .5s ease;
+        @media (min-width: $tablet-bkp) {
+            height: 100vh;
+            top: 0;
+            width: 15vw;
+            transform: translateX(0);
+        }
+    }
+    &__cnt {
+        width: 50vw;
+        transition: width .5s ease;
+        @media (min-width: $tablet-bkp) {
+            width: 15vw;    
+        }
+        &--links {
+            background-color: $light-blue;
+            @media (min-width: $tablet-bkp) {
+                width: 15vw;    
+            }
+        }
+        &--background {
+            background-color: $light-blue;
+            opacity: .3;
+            @media (min-width: $tablet-bkp) {
+                width: 0;    
+            }
+        }
+    }
+    &__opt-cnt {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 95%;
+        height: calc(88vh/6);
+        @media (min-width: $tablet-bkp) {
+            height: calc(100vh/6);
+        }
+    }
+}
+
