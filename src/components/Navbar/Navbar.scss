@@ -29,6 +29,7 @@
             border-bottom: 0.0625rem solid $nav-background-low-opacity;
             width: 20vw;
             transition: width 0.5s ease;
+            
 
             @media (min-width: $tablet-bkp) {
                 width: 9vw;
@@ -137,7 +138,7 @@
                         font-size: 2.5rem;
                     }
                     &:hover {
-                        text-decoration-color: $beige;
+                        text-decoration-color: $light-blue;
                         text-underline-offset: 0.4em;
                     }
 
@@ -163,7 +164,7 @@
                     transition: color 0.3s ease;
 
                     &:hover {
-                        color: $beige;
+                        color: $light-color;
                     }
                 }
             }
@@ -189,7 +190,7 @@
 
 .beige-active-underline {
     text-decoration: underline 0.15rem;
-    text-decoration-color: $beige;
+    text-decoration-color: $light-blue;
     text-underline-offset: 0.4em;
 }
 

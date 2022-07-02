@@ -4,38 +4,73 @@
         width: 100%;
         height: 100vh;
         overflow: hidden;
+        flex-direction: column;
+        @media (min-width: $tablet-bkp) {
+            //flex-direction: row;
+        }
     }
     &__cnt {
+        transition: height 1s ease;
         &--left {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            width: 35%;
-            background-color: $low-beige;
+            justify-content: center;
+            align-items: flex-end;
+            width: 100%;
+            background-color: $light-color;
+            
             color: black;
+            height: 25vh;
+            border-bottom: 1rem solid white;
+            /*
+            @media (min-width: $tablet-bkp) {
+                justify-content: flex-end;
+                align-items: center;
+                width: 35%;
+                height: 100vh;
+            }
+            */
         }
         &--right {
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            width: 65%;
+            justify-content: center;
+
+            width: 100%;
             background-color: white;
             color: black;
+            height: 75vh;
+            background-image: url("https://d2908q01vomqb2.cloudfront.net/9e6a55b6b4563e652a23be9d623ca5055c356940/2021/05/11/digital-currency.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-top: 1rem solid white;
+            
+            /*
+            @media (min-width: $tablet-bkp) {
+                justify-content: flex-start;
+                align-items: center;
+                width: 65%;
+                height: 100vh;
+            }*/
         }
     }
     &__sub-cnt {
-        width: 75%;
+        width: 85%;
         height: 80%;
-        box-shadow: $brown 5px 5px 10px;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
         &__error {
             width: 70%;
             background-color: rgb(255, 73, 73);
-            margin: 7.5% 0;
-            padding: 5%;
+            margin: 2% 0;
+            //padding: 2%;
             text-align: center;
+            animation-delay: 0.5s;
+            animation: fadeInDown 2s;
+
             &--text {
-                font-size: 1.5rem;
+                font-size: 1rem;
                 color: white;
+                @media (min-width: $tablet-bkp) {
+                    font-size: 1.2rem;
+                }
             }
         }
         &--left {
@@ -44,65 +79,151 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background-color: $low-beige;
-            box-shadow: $brown -5px 5px 10px;
+            background-color: $dark-color;
+            //box-shadow: $brown -5px 5px 10px;
             transition: 1s ease-in-out;
-            &:hover {
-                transform: translateY(35%);
+            width: 60%;
+
+            height: 20vh;
+            transition: transform 1s ease;
+            transition: z-index .5s ease;
+            transition: opacity .5s ease;
+            opacity: 1;
+            color: white;
+            //transform: translateY(20%);
+            @media (min-width: $tablet-bkp) {
+                //width: 75%;
+                //transform: translateY(0);
+                top: 0;
+                height: 80%;
             }
-            &:active {
-                transform: translateY(0);
+            //Konrad logo
+            & svg path {
+                fill: #fff;
             }
         }
         &--right {
+            margin: 0;
+            padding: 0;
+            height: 95%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background-color: white;
             transition: 1s ease-in-out;
+
+            @media (min-width: $tablet-bkp) {
+                height: 95%;
+                width: 70%;
+            }
             //&:hover {transform: translateX(35%); }
-            
         }
         &__cnt {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             width: 70%;
-            height: 7.5rem;
-            margin-bottom: 5%;
-            
+            height: 5rem;
+            margin-bottom: 10%;
+            @media (min-width: $tablet-bkp) {
+                height: 7.5rem;
+                margin-bottom: 2.5%;
+            }
         }
         &__title {
-            font-size: 3rem;
+            font-size: 2rem;
+            margin: 0;
+            transition: letter-spacing 1s;
+
+            text-align: center;
+            width: 100%;
+            @media (min-width: $tablet-bkp) {
+                font-size: 3rem;
+            }
+            @media (min-width: $desktop-bkp) {
+                width: 90%;
+            }
+            @media (min-width: 1392px) {
+                width: 70%;
+            }
+            &:hover {
+                letter-spacing: 3px;
+                @media (min-width: $tablet-bkp) {
+                    
+                }
+                @media (min-width: $desktop-bkp) {
+                    letter-spacing: 8px;
+                }
+            }
         }
         &__subtitle {
-            font-size: 2.2rem;
+            font-size: 2rem;
+            margin: 0;
+            margin-top: 1rem;
+            @media (min-width: $tablet-bkp) {
+                font-size: 2.2rem;
+            }
         }
         &__lbl {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            @media (min-width: $tablet-bkp) {
+                font-size: 1.4rem;
+            }
         }
         &__inp {
             width: 100%;
-            
+
             padding: 4% 2.5%;
             margin-top: 0.4rem;
             margin-bottom: 0.4rem;
-            font-size: 1.2rem;
+            font-size: 1rem;
+            border: 0.0625rem solid black;
+            border-radius: 5px;
+            @media (min-width: $tablet-bkp) {
+                font-size: 1.2rem;
+                padding: 2% 2.5%;
+            }
         }
         &__submit {
-            margin-top: 5%;
             width: 70%;
-            background-color: $brown;
+            background-color: $light-color;
             padding: 3%;
             font-size: 1.2rem;
             color: white;
             border: 0;
+            border-radius: 5px;
+            @media (min-width: $tablet-bkp) {
+                padding: 2%;
+            }
             &:hover {
-                
-                background-color: black;
+                background-color: $dark-color;
             }
         }
+    }
+}
+
+.fixed-title-cnt {
+    position: fixed;
+    top: 20%;
+}
+.transform-y-20 {
+    transform-style:preserve-3d;
+    transform: translateY(30%);
+}
+.z-index-minus-1 {
+    z-index: -1;
+    opacity: 0;
+}
+
+@keyframes waviy {
+    0%,
+    40%,
+    100% {
+        transform: translateY(0);
+    }
+    20% {
+        transform: translateY(-20px);
     }
 }

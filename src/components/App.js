@@ -1,32 +1,50 @@
+import { createContext, useContext, useState } from 'react';
 import Navbar from './Navbar/Navbar';
 import Login from './Login/Login';
 import Signup from './SignUp/Signup';
 import Home from './Home/Home';
+import useBreakpoint from './hooks/useBreakpoint';
+
+export const BreakpointContext = createContext({ breakPoint: null });
 
 const App = (props) => {
   const { container } = props;
-  return (
-    <div className="app">
-      <Navbar navOpen={false} container={container}/>
-      <div className="app__info">
-        {container === "Home" &&
-          <Home />
-        }
-        {container === "Login" &&
-          <div className="app-cnt" >
-            <Login />
-          </div>
+  const [breakPoint] = useBreakpoint();
+  const [navOpen,setNavOpen] = useState(false);
 
-        }
-        {container === "Signup" &&
-          <div className="app-cnt">
-            <Signup />
-          </div>
-        }
+  const navState = (state) => {
+    if(state) {
+      setNavOpen(true);
+    } else {
+      setNavOpen(false);
+    }
+  }
+  return (
+    <BreakpointContext.Provider value={{ breakPoint: breakPoint }}>
+      <div className="app">
+        <Navbar navOpen={false} container={container} navState={navState} />
+        <div className="app__info">
+          {container === "Home" &&
+            <div className="app__cnt" >
+              <Home />
+            </div>
+          }
+          {container === "Login" &&
+            <div className="app__cnt" >
+              <Login navState={navOpen}/>
+            </div>
+
+          }
+          {container === "Signup" &&
+            <div className="app__cnt">
+              <Signup />
+            </div>
+          }
+
+        </div>
 
       </div>
-
-    </div>
+    </BreakpointContext.Provider >
   );
 }
 

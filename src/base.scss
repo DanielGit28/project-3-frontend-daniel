@@ -4,20 +4,23 @@ html {
 *,*::after, *::before {
   box-sizing: inherit;
 }
+
 .app {
   text-align: center;
   width: 100%;
   height: 100%;
-  position: relative;
   display: flex;
   color: black;
   &__info {
     width: 100vw;
+    animation: opacity-in .5s ease;
+    transition: opacity 1s;
     @media (min-width: $tablet-bkp) {
       width: 91vw;
       margin-left: 9vw;
     }
   }
+  
 }
 
 ul {

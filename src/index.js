@@ -15,13 +15,12 @@ root.render(
       <Route path="/login" element={<App container={"Login"} />} />
       <Route path="/signup" element={<App container={"Signup"} />} />
 
-      <Route path="/bank-home" element={<BankHome container={"Dashboard"} />}>
-        <Route path="/bank-home/profile" element={<BankHome container={"Profile"} />} />
-        <Route path="/bank-home/add-money" element={<BankHome container={"AddMoney"} />} />
-        <Route path="/bank-home/money-transfer" element={<BankHome container={"MoneyTransfer"} />} />
-        <Route path="/bank-home/services" element={<BankHome container={"Services"} />} />
-        <Route path="/bank-home/account-history" element={<BankHome container={"AcountHistory"} />} />
-      </Route>
+      <Route path="/bank-home" element={<BankHome container={"Dashboard"} />} />
+      <Route path="/bank-home/profile" element={<BankHome container={"Profile"} />} />
+      <Route path="/bank-home/add-money" element={<BankHome container={"AddMoney"} />} />
+      <Route path="/bank-home/money-transfer" element={<BankHome container={"MoneyTransfer"} />} />
+      <Route path="/bank-home/services" element={<BankHome container={"Services"} />} />
+      <Route path="/bank-home/account-history" element={<BankHome container={"AccountHistory"} />} />
     </Routes>
   </Router >
 );
