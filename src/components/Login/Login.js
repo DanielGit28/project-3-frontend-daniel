@@ -27,12 +27,6 @@ const Login = (props) => {
     let handleSubmit = (event) => {
         event.preventDefault();
         let loginInfo = { username: formUserName, password: formPassword };
-        const requestOptions = {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify(loginInfo)
-        };
         //Validate email field
         if (formUserName.length === 0) {
             setError(true);
@@ -115,7 +109,7 @@ const Login = (props) => {
             }
         }
         
-    },[breakPoint])
+    },[breakPoint,navState])
 
     return (
         <div className="login__root">
