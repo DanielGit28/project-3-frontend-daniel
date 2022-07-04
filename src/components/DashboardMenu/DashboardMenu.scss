@@ -1,39 +1,40 @@
 .dash-menu {
     &__root {
         display: flex;
-        
+
         width: 100vw;
         position: fixed;
         height: 88vh;
         top: 12vh;
-        
-        transition: height .5s ease;
+
+        transition: height 0.5s ease;
         transform: translateX(-100vw);
-        transition: transform .5s ease;
+        transition: transform 0.5s ease;
+        transition: width 0.5s ease;
         @media (min-width: $tablet-bkp) {
             height: 100vh;
             top: 0;
-            width: 15vw;
+            width: 20vw;
             transform: translateX(0);
         }
     }
     &__cnt {
         width: 50vw;
-        transition: width .5s ease;
+        transition: width 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         @media (min-width: $tablet-bkp) {
-            width: 15vw;    
+            width: 20vw;
         }
         &--links {
             background-color: $light-blue;
-            @media (min-width: $tablet-bkp) {
-                width: 15vw;    
-            }
         }
         &--background {
             background-color: $light-blue;
-            opacity: .3;
+            opacity: 0.3;
             @media (min-width: $tablet-bkp) {
-                width: 0;    
+                width: 0;
             }
         }
     }
@@ -43,11 +44,32 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 95%;
+        transition: background-color 0.5s ease;
+        transition: color 0.5 ease;
         height: calc(88vh/6);
         @media (min-width: $tablet-bkp) {
-            height: calc(100vh/6);
+            height: 12vh;
+        }
+        &:hover {
+            opacity: 0.8;
+        }
+        &__img {
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 50%;
+            @media (min-width: 500px) {
+                width: 5rem;
+                height: 5rem;
+            }
+            
+        }
+        &__icon {
+            font-size: 2rem;
         }
     }
 }
 
+.active-dash-link {
+    background-color: white;
+    color: black;
+}

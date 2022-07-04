@@ -138,7 +138,7 @@ const Login = (props) => {
 
                     <div className="login__sub-cnt__cnt">
                         <label className="login__sub-cnt__lbl" htmlFor="login_password">Password</label>
-                        <input ref={passwordInp} type={"text"} className="login__sub-cnt__inp" name="login_password" id="login_password" value={formPassword || ""} onChange={e => handleChangeInputs("password", e)} />
+                        <input ref={passwordInp} type={"password"} className="login__sub-cnt__inp" name="login_password" id="login_password" value={formPassword || ""} onChange={e => handleChangeInputs("password", e)} />
                     </div>
 
 

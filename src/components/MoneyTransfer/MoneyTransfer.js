@@ -1,8 +1,10 @@
+import FormTransferFunds from "../Forms/FormTransferFunds/FormTransferFunds";
+
 const MoneyTransfer = () => {
 
     return(
         <div>
-            Money transfer
+            <FormTransferFunds />
        </div>
     );
 }

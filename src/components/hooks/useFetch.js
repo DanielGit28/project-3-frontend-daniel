@@ -26,7 +26,10 @@ const useFetch = (url, withAuth) => {
                 .then(response => response.json())
                 .then(setData)
                 .catch(setError)
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    console.log("Loading finished fetch hook")
+                    setLoading(false)
+                });
         }
     }, [url, withAuth]);
 

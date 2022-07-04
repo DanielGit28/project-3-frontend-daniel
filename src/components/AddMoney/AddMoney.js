@@ -1,8 +1,10 @@
+import FormAddFunds from "../Forms/FormAddFunds/FormAddFunds";
+
 const AddMoney = () => {
 
     return(
         <div>
-            Add money
+            <FormAddFunds />
         </div>
     );
 }
