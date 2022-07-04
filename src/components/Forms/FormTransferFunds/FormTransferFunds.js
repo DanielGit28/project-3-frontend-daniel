@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { PropTypes } from "prop-types";
 import FormInput from "../../FormInput/FormInput";
-import {  useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { BankContext } from "../../BankHome/BankHome";
 
 const FormTransferFunds = (props) => {
-    const { getInfo, prevForm } = props;
+    const { isMenuOpen } = props;
     const userEmail = localStorage.getItem("userLoggedEmail");
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState(["", ""]);
@@ -13,7 +13,7 @@ const FormTransferFunds = (props) => {
     const [errorInfo, setErrorInfo] = useState("Wrong or missing information. Check the information again.");
     const [accountsInfo, setAccountsInfo] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const form = useRef(null);
     const [accountSelected, setAccountSelected] = useState("Select the account:");
     const [currency, setCurrency] = useState(null);
     const navigate = useNavigate();
@@ -23,7 +23,12 @@ const FormTransferFunds = (props) => {
         token = token.replace(/^"(.+(?="$))"$/, '$1');
     }
 
-
+    const bankContext = useContext(BankContext);
+    useEffect(() => {
+        if (bankContext.userInfo.loading === false) {
+            setLoading(false);
+        }
+    }, [bankContext]);
 
     let formInfo = [{
         info: "Amount",
@@ -116,6 +121,7 @@ const FormTransferFunds = (props) => {
 
 
     useEffect(() => {
+        setLoading(true);
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -127,12 +133,37 @@ const FormTransferFunds = (props) => {
                 setAccountsInfo(data);
                 setLoading(false);
             })
-    }, [token, userEmail]);
+
+    }, [token, userEmail, bankContext, isMenuOpen]);
+    /*
+    useEffect(() => {
+        //animations
+        if (accountsInfo !== null && !loading) {
+            
+            if (bankContext.breakPoint[0] < 768) {
+                if (isMenuOpen) {
+                    
+                    form.current.classList.add("scale-out");
+                    form.current.classList.remove("scale-in");
+                } else {
+                    
+                    form.current.classList.remove("scale-out");
+                    form.current.classList.add("scale-in");
+
+                }
+            } else {
+                form.current.classList.remove("scale-out");
+                    form.current.classList.remove("scale-in");
+            }
+        }
+    }, [accountsInfo, bankContext, isMenuOpen, loading])
+*/
+
 
 
     if (loading === false) {
         return (
-            <div className="form__root">
+            <div ref={form} className="form__root">
                 <div className="form__cnt form__info__cnt">
                     <h1 className="form__info__title">Transfer money</h1>
                     <div className={`form__error form__error--left-space ${error}`}>

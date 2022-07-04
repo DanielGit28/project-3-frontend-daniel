@@ -36,7 +36,7 @@ const App = (props) => {
 
           }
           {container === "Signup" &&
-            <div className="app__cnt">
+            <div className="app__cnt app__cnt__signup">
               <Signup />
             </div>
           }

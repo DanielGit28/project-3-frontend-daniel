@@ -20,9 +20,7 @@ const DashboardMenu = (props) => {
     const servicesLink = useRef(null);
     const historyLink = useRef(null);
     const userEmail = localStorage.getItem("userLoggedEmail");
-    const bankContext = useContext(BankContext);
-    const [userInfo, setUserInfo] = useState("");
-    const [loading, setLoading] = useState(true);
+    
 
     const dashLinkClick = (state, link) => {
         menuState(state);
@@ -33,6 +31,9 @@ const DashboardMenu = (props) => {
     if (token) {
         token = token.replace(/^"(.+(?="$))"$/, '$1');
     }
+    const bankContext = useContext(BankContext);
+    const [userInfo, setUserInfo] = useState("");
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         if (bankContext.userInfo.loading === false) {
             setLoading(false);

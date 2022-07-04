@@ -1,10 +1,10 @@
 import FormAddFunds from "../Forms/FormAddFunds/FormAddFunds";
 
-const AddMoney = () => {
-
+const AddMoney = (props) => {
+    const {isMenuOpen} = props;
     return(
         <div>
-            <FormAddFunds />
+            <FormAddFunds isMenuOpen={isMenuOpen}/>
         </div>
     );
 }

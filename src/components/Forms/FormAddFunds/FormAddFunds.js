@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { PropTypes } from "prop-types";
 import FormInput from "../../FormInput/FormInput";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BankContext } from "../../BankHome/BankHome";
 
 
 const FormTransferFunds = (props) => {
-    const { getInfo, prevForm } = props;
+    const { isMenuOpen } = props;
     const userEmail = localStorage.getItem("userLoggedEmail");
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState(["", "", "", ""]);
@@ -13,6 +14,7 @@ const FormTransferFunds = (props) => {
     const [errorInfo, setErrorInfo] = useState("Wrong or missing information. Check the information again.");
     const [accountsInfo, setAccountsInfo] = useState(null);
     const [loading, setLoading] = useState(true);
+    const form = useRef(null);
 
     const [accountSelected, setAccountSelected] = useState("Select the account:");
     const [currency, setCurrency] = useState(null);
@@ -22,6 +24,15 @@ const FormTransferFunds = (props) => {
     if (token) {
         token = token.replace(/^"(.+(?="$))"$/, '$1');
     }
+    const bankContext = useContext(BankContext);
+    const [userInfo, setUserInfo] = useState("");
+    useEffect(() => {
+        if (bankContext.userInfo.loading === false) {
+            setLoading(false);
+            //console.log(userInfo);
+            setUserInfo(bankContext.userInfo.data);
+        }
+    }, [bankContext]);
 
 
 
@@ -75,7 +86,7 @@ const FormTransferFunds = (props) => {
                         amount: inputsValues[0],
                         movementType: "Money insertion"
                     }
-                    
+
                     const requestOptions = {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -105,6 +116,7 @@ const FormTransferFunds = (props) => {
 
 
     useEffect(() => {
+        setLoading(true);
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -112,16 +124,17 @@ const FormTransferFunds = (props) => {
         fetch(`https://project-3-backend-daniel.herokuapp.com/bank-accounts/user/${userEmail}`, requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setAccountsInfo(data);
                 setLoading(false);
             })
-    }, [token, userEmail]);
+
+    }, [token, userEmail, bankContext, isMenuOpen]);
 
 
     if (loading === false) {
         return (
-            <div className="form__root">
+            <div ref={form} className="form__root form__root__dash">
                 <div className="form__cnt form__info__cnt">
                     <h1 className="form__info__title">Add funds</h1>
                     <div className={`form__error form__error--left-space ${error}`}>
@@ -131,10 +144,10 @@ const FormTransferFunds = (props) => {
                     </div>
 
                 </div>
-                <form className="form__form" onSubmit={handleSubmit}>
+                <form className="form__form " onSubmit={handleSubmit}>
 
                     <div className="form__form__cnt">
-                        <select value={accountSelected} onChange={handleDropdownChange}>
+                        <select className="form__form__select" value={accountSelected} onChange={handleDropdownChange}>
                             <option defaultValue disabled>Select the account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dolar account - {accountsInfo[1].accountNumber}</option>
@@ -143,11 +156,11 @@ const FormTransferFunds = (props) => {
                     <div className="form__form__cnt">
                         <label>Currency</label>
                         <div>
-                            <input id="form-personal-gender-male" name="form-personal-gender-male" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
+                            <input className="form__form__inp-radio" id="form-personal-gender-male" name="form-personal-gender-male" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
                             <label htmlFor="form-personal-gender-male">Colon</label>
                         </div>
                         <div>
-                            <input id="form-personal-gender-female" name="form-personal-gender-female" type={"radio"} value={"Dolar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dolar"} />
+                            <input className="form__form__inp-radio" id="form-personal-gender-female" name="form-personal-gender-female" type={"radio"} value={"Dolar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dolar"} />
                             <label htmlFor="form-personal-gender-female">Dolar</label>
                         </div>
                     </div>

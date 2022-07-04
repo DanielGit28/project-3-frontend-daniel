@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             })
     }, [token, userEmail]);
 
-    if(loading === false) {
+    if(loading === false && accountsInfo !== "Token not valid") {
         return (
             <div className="dashboard__root">
                 <div className="dashboard__cnt dashboard__cnt-cards">

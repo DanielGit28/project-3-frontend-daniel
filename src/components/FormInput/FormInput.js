@@ -72,7 +72,7 @@ const FormInput = (props) => {
     if (inputInfo) {
         return (
             <div className="form-input__root">
-                {inputInfo.labelRequired && <label className="form__label" htmlFor={inputInfo.id} >{inputInfo.info}</label>}
+                {inputInfo.labelRequired && <label className={`form__label ${inputInfo.customLabelClass}`} htmlFor={inputInfo.id} >{inputInfo.info}</label>}
 
                 <input ref={inputError} type={`${inputInfo.type}`} aria-labelledby={inputInfo.id} placeholder={inputInfo.placeholder} id={inputInfo.id} className={`form__form__inp ${inputInfo.customClassInput}`} value={inputValue || ""} onChange={e => {
                     handleInputChange(e, index)

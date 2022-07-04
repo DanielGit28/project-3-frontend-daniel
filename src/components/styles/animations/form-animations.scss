@@ -1,0 +1,40 @@
+.scale-in {
+    animation: scale-in .8s forwards;
+        -webkit-animation: scale-in .8s forwards;
+}
+
+.scale-out {
+    animation: scale-out .8s forwards;
+        -webkit-animation: scale-out .8s forwards;
+}
+
+@keyframes scale-in {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes scale-in {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes scale-out {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@-webkit-keyframes scale-out {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+

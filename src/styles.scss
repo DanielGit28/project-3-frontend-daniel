@@ -10,6 +10,8 @@
 
 
 //Components
+@import "./components/Forms/Form.scss";
+@import "./components/FormInput/FormInput.scss";
 @import "./components/Navbar/Navbar.scss";
 @import "./components/SignUp/Signup.scss";
 @import "./components/Forms/FormSignUp/FormSignUp.scss";
@@ -25,14 +27,14 @@
 @import "./components/MoneyTransfer/MoneyTransfer.scss";
 @import "./components/Services/Services.scss";
 @import "./components/AccountHistory/AccountHistory.scss";
-@import "./components/Forms/Form.scss";
-@import "./components/FormInput/FormInput.scss";
+
 @import "./components/Forms/FormAddFunds/FormAddFunds.scss";
 @import "./components/Forms/FormTransferFunds/FormTransferFunds.scss";
 @import "./components/Forms/FormServices/FormServices.scss";
 
 //Animations
 @import "./components/styles/animations/animations.scss";
+@import "./components/styles/animations/form-animations.scss";
 
 //Base
 @import "./base.scss";

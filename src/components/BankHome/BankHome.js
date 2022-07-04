@@ -40,7 +40,7 @@ const BankHome = (props) => {
     useEffect(() => {
         if (userInfo.loading === false) {
             setLoading(false);
-            console.log(userInfo);
+            //console.log(userInfo);
         }
     }, [userInfo]);
 
@@ -78,12 +78,12 @@ const BankHome = (props) => {
                                 }
                                 {container === "AddMoney" &&
                                     <div className="bank-home__cnt" >
-                                        <AddMoney />
+                                        <AddMoney isMenuOpen={isMenuOpen}/>
                                     </div>
                                 }
                                 {container === "MoneyTransfer" &&
                                     <div className="bank-home__cnt" >
-                                        <MoneyTransfer />
+                                        <MoneyTransfer isMenuOpen={isMenuOpen} />
                                     </div>
                                 }
                                 {container === "Services" &&

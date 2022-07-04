@@ -1,10 +1,10 @@
 import FormTransferFunds from "../Forms/FormTransferFunds/FormTransferFunds";
 
-const MoneyTransfer = () => {
-
+const MoneyTransfer = (props) => {
+    const {isMenuOpen} = props;
     return(
         <div>
-            <FormTransferFunds />
+            <FormTransferFunds isMenuOpen={isMenuOpen}/>
        </div>
     );
 }

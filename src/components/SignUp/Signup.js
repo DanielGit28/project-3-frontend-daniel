@@ -4,21 +4,18 @@ import FormInput from "../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
 
 
-const Signup = () => {
-
+const Signup = (props) => {
+    const {isMenuOpen} = props;
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState(["", "", "", "", ""]);
     const [inputsErrors, setInputsErrors] = useState([]);
     const [errorInfo, setErrorInfo] = useState("Wrong or missing information. Check the information again.");
 
     const [accountImg, setAccountImg] = useState("");
+    const [loadingImg, setLoadingImg] = useState(false);
 
     const [incomeSource, setIncomeSource] = useState("Select the income source:");
     const navigate = useNavigate();
-    let cloudinaryWidget = window.cloudinary.createUploadWidget({
-        cloudName: "develop-daniel",
-        uploadPreset: "qsos1wdv"
-    }, (error, result) => {checkUploadResult(result)})
 
     let token = localStorage.getItem("JWT");
     if (token) {
@@ -34,6 +31,7 @@ const Signup = () => {
         placeholder: "Robert Downey Jr.",
         errorInfo: "Enter a valid name",
         customClassInput: "",
+        customLabelClass: "signup__text",
         labelRequired: true
     },
     {
@@ -43,6 +41,7 @@ const Signup = () => {
         placeholder: "111000222",
         errorInfo: "Enter a valid id",
         customClassInput: "",
+        customLabelClass: "signup__text",
         labelRequired: true
     }, {
         info: "Email",
@@ -51,6 +50,7 @@ const Signup = () => {
         placeholder: "d@gmail.com",
         errorInfo: "Enter a valid email",
         customClassInput: "",
+        customLabelClass: "signup__text",
         labelRequired: true
     }, {
         info: "Password",
@@ -59,6 +59,7 @@ const Signup = () => {
         placeholder: "",
         errorInfo: "Enter a valid password",
         customClassInput: "",
+        customLabelClass: "signup__text",
         labelRequired: true
     },
     {
@@ -68,17 +69,28 @@ const Signup = () => {
         placeholder: "",
         errorInfo: "Enter the same password",
         customClassInput: "",
+        customLabelClass: "signup__text",
         labelRequired: true
     }];
 
 
-    const showWidget = () => {
-        cloudinaryWidget.open();
-    }
-    const checkUploadResult = (resultEvent) => {
-        if(resultEvent.event === "success") {
-            setAccountImg(resultEvent.info.url);
-        }
+    const uploadImg = (e) => {
+        setLoadingImg(true);
+        console.log(e.target.files[0]);
+        const imgData = new FormData();
+        imgData.append("file", e.target.files[0]);
+        imgData.append("upload_preset", "qsos1wdv");
+        console.log(imgData);
+
+        fetch("https://api.cloudinary.com/v1_1/develop-daniel/image/upload", {
+            method: "POST",
+            body: imgData
+        }).then(response => response.json())
+        .then((data => {
+            setAccountImg(data.url);
+            setLoadingImg(false);
+        }))
+        .catch(err => console.log("Error: ",err));
     }
 
     const handleInputChange = (event, index) => {
@@ -155,24 +167,25 @@ const Signup = () => {
 
 
     return (
-        <div className="form__root">
-            <div className="form__cnt form__info__cnt">
-                <h1 className="form__info__title">Create account</h1>
-                <div className={`form__error form__error--left-space ${error}`}>
+        <div className="form__root signup__form ">
+            <div className="form__cnt form__info__cnt signup__cnt__title">
+                <h1 className="form__info__title ">Create account</h1>
+                
+
+            </div>
+            <form className="form__form" onSubmit={handleSubmit}>
+            <div className={`form__error form__error--left-space ${error}`}>
                     <div className="form__error__box">
                         <i className='fas fa-exclamation-circle form__error--icon'></i><p className="form__error--text">{errorInfo}</p>
                     </div>
                 </div>
-
-            </div>
-            <form className="form__form" onSubmit={handleSubmit}>
                 <div className="form__form__cnt">
                     {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
                     )}
 
                 </div>
                 <div className="form__form__cnt">
-                    <select value={incomeSource} onChange={handleDropdownChange}>
+                    <select className="form__form__select" value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
                         <option value={"Employed"}>Employed</option>
                         <option value={"Business Owner"}>Business Owner</option>
@@ -184,13 +197,14 @@ const Signup = () => {
                 </div>
 
                 <div className="form__form__cnt form__form__cnt-img">
-                <label className="form__label" htmlFor={"form-img"} >Select a profile picture</label>
-                    <button id="form-img" aria-labelledby="form-img" type="button" onClick={showWidget} >Upload photo</button>
+                <label className="form__label signup__text" htmlFor={"form-img"} >Select a profile picture</label>
+                    <input type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" />
                     {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="form__form__img" />}
                 </div>
 
-                <div className="form__btns__cnt">
-                    <button name="next-btn" type="submit" className="form__form__btn product__add__btn">
+                <div className=" form__cnt form__cnt__submit
+                form__submit">
+                    <button name="next-btn" type="submit" className="form__form__btn product__add__btn signup__cnt__submit">
                         Submit
                     </button>
                 </div>
