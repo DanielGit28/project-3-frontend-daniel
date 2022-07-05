@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BreakpointContext } from "../App";
 
 const Login = (props) => {
-    const {navState} = props;
+    const { navState } = props;
     const [formUserName, setFormUserName] = useState("");
     const [formPassword, setFormPassword] = useState("");
     const [error, setError] = useState(false);
@@ -14,7 +14,7 @@ const Login = (props) => {
     const userNameInp = useRef(null);
     const passwordInp = useRef(null);
     const breakPoint = useContext(BreakpointContext);
-    
+
 
     const handleChangeInputs = (value, e) => {
         if (value === "username") {
@@ -76,48 +76,48 @@ const Login = (props) => {
         if (breakPoint.breakPoint[0] > 768) {
             titleCnt.current.classList.remove("transform-y-20");
             titleCnt.current.classList.add("transform-y-20");
-            if(navState) {
+            if (navState) {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.add("z-index-minus-1");
-                  }, 150);
-              
-                 return () => clearTimeout(timeout);
-                
+                }, 150);
+
+                return () => clearTimeout(timeout);
+
             } else {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.remove("z-index-minus-1");
-                  }, 300);
-              
-                 return () => clearTimeout(timeout);
-                
+                }, 300);
+
+                return () => clearTimeout(timeout);
+
             }
         } else {
-            if(navState) {
+            if (navState) {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.add("z-index-minus-1");
-                  }, 150);
-              
-                 return () => clearTimeout(timeout);
-                
+                }, 150);
+
+                return () => clearTimeout(timeout);
+
             } else {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.remove("z-index-minus-1");
-                  }, 300);
-              
-                 return () => clearTimeout(timeout);
-                
+                }, 300);
+
+                return () => clearTimeout(timeout);
+
             }
         }
-        
-    },[breakPoint,navState])
+
+    }, [breakPoint, navState])
 
     return (
         <div className="login__root">
             <div className="login__cnt login__cnt--left">
-                <div ref={titleCnt}  className="login__sub-cnt login__sub-cnt--left">
-                <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k" width="3rem" height="3rem" viewBox="0 0 183.78667 184.03999">
-                            <path className="kg-logo__k__fill" d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z"></path>
-                        </svg>
+                <div ref={titleCnt} className="login__sub-cnt login__sub-cnt--left">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k" width="3rem" height="3rem" viewBox="0 0 183.78667 184.03999">
+                        <path className="kg-logo__k__fill" d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z"></path>
+                    </svg>
                     <h1 className="login__sub-cnt__title">Konrad Bank</h1>
 
                 </div>

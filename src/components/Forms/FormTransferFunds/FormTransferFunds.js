@@ -3,6 +3,7 @@ import { PropTypes } from "prop-types";
 import FormInput from "../../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
 import { BankContext } from "../../BankHome/BankHome";
+import { AiOutlineWarning } from "react-icons/ai";
 
 const FormTransferFunds = (props) => {
     const { isMenuOpen } = props;
@@ -16,6 +17,8 @@ const FormTransferFunds = (props) => {
     const form = useRef(null);
     const [accountSelected, setAccountSelected] = useState("Select the account:");
     const [currency, setCurrency] = useState(null);
+    const inputColon = useRef(null);
+    const inputDolar = useRef(null);
     const navigate = useNavigate();
 
     let token = localStorage.getItem("JWT");
@@ -63,6 +66,13 @@ const FormTransferFunds = (props) => {
     }
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value);
+        if (e.target.value === "Colon") {
+            inputColon.current.classList.add("radio-selected");
+            inputDolar.current.classList.remove("radio-selected");
+        } else if (e.target.value === "Dolar") {
+            inputColon.current.classList.remove("radio-selected");
+            inputDolar.current.classList.add("radio-selected");
+        }
     }
 
     const handleSubmit = (e) => {
@@ -135,72 +145,53 @@ const FormTransferFunds = (props) => {
             })
 
     }, [token, userEmail, bankContext, isMenuOpen]);
-    /*
-    useEffect(() => {
-        //animations
-        if (accountsInfo !== null && !loading) {
-            
-            if (bankContext.breakPoint[0] < 768) {
-                if (isMenuOpen) {
-                    
-                    form.current.classList.add("scale-out");
-                    form.current.classList.remove("scale-in");
-                } else {
-                    
-                    form.current.classList.remove("scale-out");
-                    form.current.classList.add("scale-in");
-
-                }
-            } else {
-                form.current.classList.remove("scale-out");
-                    form.current.classList.remove("scale-in");
-            }
-        }
-    }, [accountsInfo, bankContext, isMenuOpen, loading])
-*/
 
 
 
     if (loading === false) {
         return (
-            <div ref={form} className="form__root">
+            <div ref={form} className="form__root dash-form__root">
                 <div className="form__cnt form__info__cnt">
                     <h1 className="form__info__title">Transfer money</h1>
-                    <div className={`form__error form__error--left-space ${error}`}>
-                        <div className="form__error__box">
-                            <i className='fas fa-exclamation-circle form__error--icon'></i><p className="form__error--text">{errorInfo}</p>
-                        </div>
-                    </div>
+
 
                 </div>
-                <form className="form__form" onSubmit={handleSubmit}>
-
-                    <div className="form__form__cnt">
-                        <select value={accountSelected} onChange={handleDropdownChange}>
+                <form className="form__form dash-form__form" onSubmit={handleSubmit}>
+                    <div className={`form__error form__error--90 ${error}`}>
+                        <div className="form__error__box">
+                            <AiOutlineWarning className="form__error--icon" />
+                            <p className="form__error--text">{errorInfo}</p>
+                        </div>
+                    </div>
+                    <div className="form__form__cnt dash-form__form__cnt">
+                        <select className="form__form__select" value={accountSelected} onChange={handleDropdownChange}>
                             <option defaultValue disabled>Select the account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dolar account - {accountsInfo[1].accountNumber}</option>
                         </select>
                     </div>
-                    <div className="form__form__cnt">
+                    <div className="form__form__cnt dash-form__form__cnt ">
                         <label>Currency</label>
-                        <div>
-                            <input id="form-personal-gender-male" name="form-personal-gender-male" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
-                            <label htmlFor="form-personal-gender-male">Colon</label>
-                        </div>
-                        <div>
-                            <input id="form-personal-gender-female" name="form-personal-gender-female" type={"radio"} value={"Dolar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dolar"} />
-                            <label htmlFor="form-personal-gender-female">Dolar</label>
+                        <div className="dash-form__form__cnt--radio">
+                            <div>
+                                <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
+                                <label ref={inputColon} htmlFor="form-add-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
+                            </div>
+                            <div>
+                                <input className="form__form__inp-radio dash-form__inp" id="form-add-dolar" name="form-add-dolar" type={"radio"} value={"Dolar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dolar"} />
+                                <label ref={inputDolar} htmlFor="form-add-dolar" className="dash-form__inp__label dash-form__inp__label--2">Dolar</label>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="form__form__cnt">
+                    <div className="form__form__cnt dash-form__form__cnt">
                         {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
                         )}
 
                     </div>
-                    <div className="form__btns__cnt">
-                        <button name="next-btn" type="submit" className="form__form__btn product__add__btn">
+                    <div className=" form__cnt form__cnt__submit
+                form__submit">
+                        <button name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
                             Submit
                         </button>
                     </div>

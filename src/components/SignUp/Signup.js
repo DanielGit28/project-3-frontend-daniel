@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
 import FormInput from "../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
-
+import { AiOutlineWarning } from "react-icons/ai";
+import { FiUpload } from "react-icons/fi";
 
 const Signup = (props) => {
-    const {isMenuOpen} = props;
+    const { isMenuOpen } = props;
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState(["", "", "", "", ""]);
     const [inputsErrors, setInputsErrors] = useState([]);
@@ -32,6 +33,7 @@ const Signup = (props) => {
         errorInfo: "Enter a valid name",
         customClassInput: "",
         customLabelClass: "signup__text",
+        customCntClass: "form-input__root__double form-input__root__double--padd-right",
         labelRequired: true
     },
     {
@@ -42,6 +44,7 @@ const Signup = (props) => {
         errorInfo: "Enter a valid id",
         customClassInput: "",
         customLabelClass: "signup__text",
+        customCntClass: "form-input__root__double form-input__root__double--padd-left",
         labelRequired: true
     }, {
         info: "Email",
@@ -60,6 +63,7 @@ const Signup = (props) => {
         errorInfo: "Enter a valid password",
         customClassInput: "",
         customLabelClass: "signup__text",
+        customCntClass: "form-input__root__double form-input__root__double--padd-right",
         labelRequired: true
     },
     {
@@ -70,6 +74,7 @@ const Signup = (props) => {
         errorInfo: "Enter the same password",
         customClassInput: "",
         customLabelClass: "signup__text",
+        customCntClass: "form-input__root__double form-input__root__double--padd-left",
         labelRequired: true
     }];
 
@@ -86,11 +91,11 @@ const Signup = (props) => {
             method: "POST",
             body: imgData
         }).then(response => response.json())
-        .then((data => {
-            setAccountImg(data.url);
-            setLoadingImg(false);
-        }))
-        .catch(err => console.log("Error: ",err));
+            .then((data => {
+                setAccountImg(data.url);
+                setLoadingImg(false);
+            }))
+            .catch(err => console.log("Error: ", err));
     }
 
     const handleInputChange = (event, index) => {
@@ -122,27 +127,27 @@ const Signup = (props) => {
                 if (inputsValues[3] === inputsValues[4]) {
                     if (accountImg.length > 0) {
 
-                            let user = {
-                                fullName: inputsValues[0],
-                                id: inputsValues[1],
-                                photoId: accountImg,
-                                incomeSource: incomeSource[0],
-                                email: inputsValues[2],
-                                password: inputsValues[3]
-                            }
-                            console.log("Submitted user: ", user);
-                            const requestOptions = {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(user)
-                            };
-                            fetch(`https://project-3-backend-daniel.herokuapp.com/users/signup`, requestOptions)
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data);
-                                    navigate("/login");
-        
-                                })
+                        let user = {
+                            fullName: inputsValues[0],
+                            id: inputsValues[1],
+                            photoId: accountImg,
+                            incomeSource: incomeSource[0],
+                            email: inputsValues[2],
+                            password: inputsValues[3]
+                        }
+                        console.log("Submitted user: ", user);
+                        const requestOptions = {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(user)
+                        };
+                        fetch(`https://project-3-backend-daniel.herokuapp.com/users/signup`, requestOptions)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                navigate("/login");
+
+                            })
 
                     } else {
                         setError("form__error--show");
@@ -170,41 +175,56 @@ const Signup = (props) => {
         <div className="form__root signup__form ">
             <div className="form__cnt form__info__cnt signup__cnt__title">
                 <h1 className="form__info__title ">Create account</h1>
-                
+
 
             </div>
             <form className="form__form" onSubmit={handleSubmit}>
-            <div className={`form__error form__error--left-space ${error}`}>
+                <div className={`form__error form__error--90 ${error}`}>
                     <div className="form__error__box">
-                        <i className='fas fa-exclamation-circle form__error--icon'></i><p className="form__error--text">{errorInfo}</p>
+                        <AiOutlineWarning className="form__error--icon" />
+                        <p className="form__error--text">{errorInfo}</p>
                     </div>
                 </div>
-                <div className="form__form__cnt">
-                    {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
-                    )}
+                <div className="form__form__cnt form__form__cnt--row">
+                    <FormInput key={0} inputInfo={formInfo[0]} handleInputChange={handleInputChange} index={0} errorSubmit={inputsErrors} />
+                    <FormInput key={1} inputInfo={formInfo[1]} handleInputChange={handleInputChange} index={1} errorSubmit={inputsErrors} />
+
+                </div>
+                <div className="form__form__cnt ">
+                    <FormInput key={2} inputInfo={formInfo[2]} handleInputChange={handleInputChange} index={2} errorSubmit={inputsErrors} />
+                </div>
+                <div className="form__form__cnt form__form__cnt--row">
+                    <FormInput key={3} inputInfo={formInfo[3]} handleInputChange={handleInputChange} index={3} errorSubmit={inputsErrors} />
+                    <FormInput key={4} inputInfo={formInfo[4]} handleInputChange={handleInputChange} index={4} errorSubmit={inputsErrors} />
 
                 </div>
                 <div className="form__form__cnt">
                     <select className="form__form__select" value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
-                        <option value={"Employed"}>Employed</option>
-                        <option value={"Business Owner"}>Business Owner</option>
-                        <option value={"Self-Employed"}>Self-Employed</option>
-                        <option value={"Retired"}>Retired</option>
-                        <option value={"Investor"}>Investor</option>
-                        <option value={"Other"}>Other</option>
+                        <option className="form__form__select-opt" value={"Employed"}>Employed</option>
+                        <option className="form__form__select-opt" value={"Business Owner"}>Business Owner</option>
+                        <option className="form__form__select-opt" value={"Self-Employed"}>Self-Employed</option>
+                        <option className="form__form__select-opt" value={"Retired"}>Retired</option>
+                        <option className="form__form__select-opt" value={"Investor"}>Investor</option>
+                        <option className="form__form__select-opt" value={"Other"}>Other</option>
                     </select>
                 </div>
 
-                <div className="form__form__cnt form__form__cnt-img">
-                <label className="form__label signup__text" htmlFor={"form-img"} >Select a profile picture</label>
-                    <input type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" />
-                    {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="form__form__img" />}
+                <div className="form__form__cnt signup__cnt__img">
+                    <label className="form__label signup__text signup__img__label" htmlFor={"form-img"} >Select a profile picture</label>
+                    <div className="signup__img__root">
+                        <div className="signup__img__cnt">
+                            <input type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" className="signup__img__inp" />
+                            <FiUpload />
+                        </div>
+                        {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="signup__img__visualizer " />}
+                    </div>
+                    
                 </div>
 
                 <div className=" form__cnt form__cnt__submit
                 form__submit">
-                    <button name="next-btn" type="submit" className="form__form__btn product__add__btn signup__cnt__submit">
+                    <button name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
                         Submit
                     </button>
                 </div>

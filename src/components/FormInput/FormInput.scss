@@ -2,6 +2,20 @@
     &__root {
         display: flex;
         flex-direction: column;
-        margin: 3% 0;
+        margin: 1% 0;
+        width: 100%;
+        &__double {
+            width: 50%;
+            &--padd {
+                &-left {
+                    padding-left: 2%;
+                }
+                &-right {
+                    padding-right: 2%;
+                }
+            }
+        }
     }
+    
 }
+

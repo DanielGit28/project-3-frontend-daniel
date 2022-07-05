@@ -1,0 +1,51 @@
+.dash-form {
+    &__root {
+        width: 50vw;
+        min-height: 40vh;
+    }
+    &__form {
+        min-height:40vh;
+        &__cnt {
+            margin: 2%;
+            &--radio {
+                display: flex;
+                flex-direction: row;
+                margin: 3.5% 0;
+            }
+        }
+    }
+    &__inp {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+        margin: 2.5% 0;
+        &:hover {
+            cursor: pointer;
+        }
+        &__label {
+            font-size: 1em;
+            text-align: center;
+            height: 2rem;
+            width: 2rem;
+            padding: 0.5em 2em;
+            border: 2px solid white;
+            margin: 2rem -1px;
+            &:hover {
+                background-color: white;
+                color: black;
+            }
+            &--1 {
+                border-radius: 25px 0 0 25px;
+            }
+            &--2 {
+                border-radius: 0 25px 25px 0;
+            }
+        }
+    }
+}
+
+.radio-selected {
+    background-color: white;
+    color: black;
+}
