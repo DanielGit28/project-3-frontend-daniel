@@ -39,7 +39,8 @@ const FormTransferFunds = (props) => {
         type: "text",
         placeholder: "",
         errorInfo: "Enter a valid amount",
-        customClassInput: "",
+        customClassInput: "dash-form__input",
+        customLabelClass: "dash-form__label",
         labelRequired: true
     },
     {
@@ -48,7 +49,8 @@ const FormTransferFunds = (props) => {
         type: "text",
         placeholder: "",
         errorInfo: "Enter a valid destination account (IBAN number)",
-        customClassInput: "",
+        customClassInput: "dash-form__input",
+        customLabelClass: "dash-form__label",
         labelRequired: true
     }];
 
@@ -164,14 +166,14 @@ const FormTransferFunds = (props) => {
                         </div>
                     </div>
                     <div className="form__form__cnt dash-form__form__cnt">
-                        <select className="form__form__select" value={accountSelected} onChange={handleDropdownChange}>
-                            <option defaultValue disabled>Select the account:</option>
+                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange}>
+                            <option defaultValue disabled>Select the origin account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dolar account - {accountsInfo[1].accountNumber}</option>
                         </select>
                     </div>
-                    <div className="form__form__cnt dash-form__form__cnt ">
-                        <label>Currency</label>
+                    <div className="form__form__cnt dash-form__form__cnt  ">
+                        <label className="dash-form__label">Currency</label>
                         <div className="dash-form__form__cnt--radio">
                             <div>
                                 <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />

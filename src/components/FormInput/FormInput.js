@@ -8,66 +8,69 @@ const FormInput = (props) => {
     const errorRef = useRef(null);
     const inputError = useRef(null);
     const errorRefSubmit = useRef(null);
+    const [localError, setLocalError] = useState(false);
 
     const [inputUsed, setInputUsed] = useState(false);
     const [errorOnSubmit, setErrorOnSubmit] = useState(false);
     const [errorInfo, setErrorInfo] = useState(inputInfo.errorInfo);
+    const [uniqueError, setUniqueError] = useState(false);
 
 
     useEffect(() => {
+
         for (let i = 0; i < errorSubmit.length; i++) {
             if (errorSubmit[i] === index) {
+                if(errorSubmit.length === 1) {
+                    if (errorSubmit[i] === index) {
+                        setUniqueError(true);
+                    }
+                }
                 setErrorOnSubmit(true);
+                setLocalError(true);
             }
         }
+
+    }, [errorSubmit, localError]);
+    useEffect(() => {
         //Error validation
         if (inputUsed) {
-            if (errorRef.current && inputError.current) {
-                if (inputValue.length === 0) {
-                    errorRef.current.classList.add("form__error--show");
-                    inputError.current.classList.add("form__error--inp");
-                    setErrorOnSubmit(false);
-                } else if (inputInfo.info === "Email") {
-                    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                    if (emailPattern.test(inputValue)) {
-                        errorRef.current.classList.remove("form__error--show");
-                        inputError.current.classList.remove("form__error--inp");
-                        setErrorOnSubmit(false);
-                    } else {
-                        errorRef.current.classList.add("form__error--show");
-                        inputError.current.classList.add("form__error--inp");
-                        setErrorOnSubmit(false);
-                    }
-                } else if (inputInfo.info === "Amount") {
-                    if (!isNaN(inputValue)) {
-                        errorRef.current.classList.remove("form__error--show");
-                        inputError.current.classList.remove("form__error--inp");
-                        setErrorOnSubmit(false);
-                    } else {
-                        errorRef.current.classList.add("form__error--show");
-                        inputError.current.classList.add("form__error--inp");
-                        setErrorOnSubmit(false);
-                    }
-                } else if (inputInfo.info === "Destination account") {
-                    var IBANPattern = /^[A-Z]{2}[0-9A-Z]*$/;
-                    if (IBANPattern.test(inputValue)) {
-                        errorRef.current.classList.remove("form__error--show");
-                        inputError.current.classList.remove("form__error--inp");
-                        setErrorOnSubmit(false);
-                    } else {
-                        errorRef.current.classList.add("form__error--show");
-                        inputError.current.classList.add("form__error--inp");
-                        setErrorOnSubmit(false);
-                    }
+
+            if (inputValue.length === 0) {
+
+                setLocalError(true);
+                console.log(inputError)
+            } else if (inputInfo.info === "Email") {
+                var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                if (emailPattern.test(inputValue)) {
+                    setLocalError(false);
+
+                } else {
+                    setLocalError(true);
+
                 }
-                else {
-                    errorRef.current.classList.remove("form__error--show");
-                    inputError.current.classList.remove("form__error--inp");
-                    setErrorOnSubmit(false);
+            } else if (inputInfo.info === "Amount") {
+                const numberRegex = /^\d+$/;
+                if (numberRegex.test(inputValue)) {
+                    setLocalError(false);
+
+                } else {
+                    setLocalError(true);
+
+                }
+            } else if (inputInfo.info === "Destination account" || inputInfo.id === "form-add-funds-origin-account") {
+                const IBANPattern = /^[A-Z]{2}[0-9A-Z]*$/;
+                if (IBANPattern.test(inputValue)) {
+                    setLocalError(false);
+                } else {
+                    setLocalError(true);
                 }
             }
+            else {
+                setLocalError(false);
+            }
+
         }
-    }, [errorRef, inputError, inputValue, errorSubmit, errorOnSubmit, index, inputInfo.info, inputUsed]);
+    }, [ inputUsed, localError, inputValue])
 
     if (inputInfo) {
         return (
@@ -81,8 +84,8 @@ const FormInput = (props) => {
                 }
                 } />
 
-                {inputUsed && <p ref={errorRef} className="form__error" id={`${inputInfo.id}-error`}>{inputInfo.errorInfo}</p>}
-                {errorOnSubmit && <p ref={errorRefSubmit} className="form__error--show" id={`${inputInfo.id}-error`}>{errorInfo}</p>}
+
+                <p ref={errorRefSubmit} className={`form__error ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"} `} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
 
             </div>
         );

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import { AiOutlineMenu, AiOutlineInstagram, AiOutlineFacebook, AiOutlineTwitter } from 'react-icons/ai';
+import { AiOutlineMenu, AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
+import {FaFacebookF} from "react-icons/fa";
 import { IoMdClose } from 'react-icons/io';
 import { Link } from "react-router-dom";
 import { BreakpointContext } from "../App";
@@ -148,7 +149,7 @@ const Navbar = (props) => {
                                 <a href={"https://www.instagram.com/konradgroup/"} className="nav__cnt-open__social-links--link" ><AiOutlineInstagram /></a>
                             </li>
                             <li>
-                                <a href={"https://www.facebook.com/konradgroup/"} className="nav__cnt-open__social-links--link" ><AiOutlineFacebook /></a>
+                                <a href={"https://www.facebook.com/konradgroup/"} className="nav__cnt-open__social-links--link" ><FaFacebookF /></a>
                             </li>
                             <li>
                                 <a href={"https://twitter.com/konradgroup"} className="nav__cnt-open__social-links--link" ><AiOutlineTwitter /></a>

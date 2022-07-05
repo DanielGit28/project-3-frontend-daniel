@@ -1,25 +1,41 @@
 .dash-form {
     &__root {
-        width: 50vw;
+        width: 60vw;
         min-height: 40vh;
     }
     &__form {
         min-height:40vh;
+        margin: 0;
+        margin-top: 5%;
         &__cnt {
             margin: 2%;
+            min-height: 5rem;
             &--radio {
                 display: flex;
                 flex-direction: row;
-                margin: 3.5% 0;
+                margin-top: 7%;
+                margin-bottom: 4%;
             }
         }
+    }
+    &__label {
+        font-size: 1rem;
+        @media (min-width: $tablet-bkp) {
+            font-size: 1.4rem;
+          }
+    }
+    &__select {
+        height: 4rem;
+    }
+    &__input {
+        height: 4rem;
     }
     &__inp {
         position: absolute !important;
         clip: rect(0, 0, 0, 0);
         height: 1px;
         width: 1px;
-        margin: 2.5% 0;
+        margin: 6% 0;
         &:hover {
             cursor: pointer;
         }
@@ -28,20 +44,26 @@
             text-align: center;
             height: 2rem;
             width: 2rem;
-            padding: 0.5em 2em;
+            padding: 1rem 3rem;
             border: 2px solid white;
             margin: 2rem -1px;
             &:hover {
                 background-color: white;
                 color: black;
+                
             }
             &--1 {
                 border-radius: 25px 0 0 25px;
+                
             }
             &--2 {
                 border-radius: 0 25px 25px 0;
             }
         }
+    }
+    &__submit {
+        
+        
     }
 }
 

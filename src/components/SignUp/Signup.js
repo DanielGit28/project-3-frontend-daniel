@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PropTypes } from "prop-types";
 import FormInput from "../FormInput/FormInput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineWarning } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 
 const Signup = (props) => {
-    const { isMenuOpen } = props;
+    const { isNavOpen } = props;
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState(["", "", "", "", ""]);
     const [inputsErrors, setInputsErrors] = useState([]);
@@ -14,9 +14,12 @@ const Signup = (props) => {
 
     const [accountImg, setAccountImg] = useState("");
     const [loadingImg, setLoadingImg] = useState(false);
-
+    const imgUploadCnt = useRef(null);
+    const submitBtn = useRef(null);
     const [incomeSource, setIncomeSource] = useState("Select the income source:");
     const navigate = useNavigate();
+    const selectIncome = useRef(null);
+    const uploadImgBtn = useRef(null);
 
     let token = localStorage.getItem("JWT");
     if (token) {
@@ -152,6 +155,7 @@ const Signup = (props) => {
                     } else {
                         setError("form__error--show");
                         setErrorInfo("Must select a profile picture");
+                        uploadImgBtn.current.focus();
                     }
 
                 } else {
@@ -161,6 +165,7 @@ const Signup = (props) => {
             } else {
                 setError("form__error--show");
                 setErrorInfo("Must select an income source");
+                selectIncome.current.focus();
             }
 
         } else {
@@ -170,16 +175,30 @@ const Signup = (props) => {
 
     }
 
+    useEffect(() => {
+        if(isNavOpen) {
+            imgUploadCnt.current.classList.add("z-index-minus-1");
+            submitBtn.current.classList.add("z-index-minus-1");
+        } else {
+            imgUploadCnt.current.classList.remove("z-index-minus-1");
+            submitBtn.current.classList.remove("z-index-minus-1");
+        }
+    },[isNavOpen])
+
 
     return (
         <div className="form__root signup__form ">
+            
             <div className="form__cnt form__info__cnt signup__cnt__title">
+            <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k signup__logo-svg" width="3rem" height="3rem" viewBox="0 0 183.78667 184.03999">
+                    <path className="kg-logo__k__fill signup__logo-path" d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z"></path>
+                </svg>
                 <h1 className="form__info__title ">Create account</h1>
 
 
             </div>
             <form className="form__form" onSubmit={handleSubmit}>
-                <div className={`form__error form__error--90 ${error}`}>
+                <div className={`form__error ${error.length > 0 && "form__error--90"} ${error}`}>
                     <div className="form__error__box">
                         <AiOutlineWarning className="form__error--icon" />
                         <p className="form__error--text">{errorInfo}</p>
@@ -199,7 +218,7 @@ const Signup = (props) => {
 
                 </div>
                 <div className="form__form__cnt">
-                    <select className="form__form__select" value={incomeSource} onChange={handleDropdownChange}>
+                    <select ref={selectIncome} className="form__form__select" value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
                         <option className="form__form__select-opt" value={"Employed"}>Employed</option>
                         <option className="form__form__select-opt" value={"Business Owner"}>Business Owner</option>
@@ -213,20 +232,25 @@ const Signup = (props) => {
                 <div className="form__form__cnt signup__cnt__img">
                     <label className="form__label signup__text signup__img__label" htmlFor={"form-img"} >Select a profile picture</label>
                     <div className="signup__img__root">
-                        <div className="signup__img__cnt">
-                            <input type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" className="signup__img__inp" />
+                        <div ref={imgUploadCnt} className="signup__img__cnt">
+                            <input ref={uploadImgBtn} type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" className="signup__img__inp" />
                             <FiUpload />
                         </div>
                         {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="signup__img__visualizer " />}
                     </div>
-                    
-                </div>
 
-                <div className=" form__cnt form__cnt__submit
-                form__submit">
-                    <button name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
+                </div>
+                <div className="form__form__cnt signup__cnt__img form__submit">
+                <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
                         Submit
                     </button>
+                </div>
+
+                <div className=" form__cnt form__cnt__login
+                ">
+                    <p className="form__cnt__login--text">Already have an account ? <Link to={"/login"} className="form__cnt__login--link form__cnt__login--text" >Login</Link></p>
+                    
+                    
                 </div>
             </form>
         </div>

@@ -37,7 +37,7 @@ const App = (props) => {
           }
           {container === "Signup" &&
             <div className="app__cnt app__cnt__signup">
-              <Signup />
+              <Signup isNavOpen={navOpen}/>
             </div>
           }
 

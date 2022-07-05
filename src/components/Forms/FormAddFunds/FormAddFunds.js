@@ -9,7 +9,7 @@ const FormTransferFunds = (props) => {
     const { isMenuOpen } = props;
     const userEmail = localStorage.getItem("userLoggedEmail");
     const [error, setError] = useState(""); // setError("form__error--show");
-    const [inputsValues, setInputsValues] = useState(["", "", "", ""]);
+    const [inputsValues, setInputsValues] = useState(["", ""]);
     const [inputsErrors, setInputsErrors] = useState([]);
     const [errorInfo, setErrorInfo] = useState("Wrong or missing information. Check the information again.");
     const [accountsInfo, setAccountsInfo] = useState(null);
@@ -39,12 +39,22 @@ const FormTransferFunds = (props) => {
 
 
     let formInfo = [{
+        info: "Origin account",
+        id: "form-add-funds-origin-account",
+        type: "text",
+        placeholder: "",
+        errorInfo: "Enter a valid account (IBAN number)",
+        customClassInput: "dash-form__input",
+        customLabelClass: "dash-form__label",
+        labelRequired: true
+    },{
         info: "Amount",
         id: "form-add-funds-amount",
         type: "text",
         placeholder: "",
         errorInfo: "Enter a valid amount",
-        customClassInput: "",
+        customClassInput: "dash-form__input",
+        customLabelClass: "dash-form__label",
         labelRequired: true
     }];
 
@@ -75,16 +85,19 @@ const FormTransferFunds = (props) => {
         e.preventDefault();
         let formValidation = true;
         let errorsInputs = [];
-        if (inputsValues[0].length === 0) {
-            formValidation = false;
-            errorsInputs.push(0);
+        for (let i = 0; i < inputsValues.length; i++) {
+            if (inputsValues[i].length === 0) {
+                formValidation = false;
+                errorsInputs.push(i);
+            }
         }
 
         console.log(inputsValues);
         console.log(formValidation);
         if (formValidation === true) {
             if (currency !== null && currency && accountSelected !== "Select the account:" && accountSelected) {
-                if (isNaN(inputsValues[0])) {
+                const numberRegex = /^\d+$/;
+                if (!numberRegex.test(inputsValues[1])) {
                     setError("form__error--show");
                     setErrorInfo("Amount must be a valid number");
                 } else {
@@ -92,7 +105,7 @@ const FormTransferFunds = (props) => {
                     let movement = {
                         originAccount: accountSelected[0],
                         currency: currency,
-                        amount: inputsValues[0],
+                        amount: inputsValues[1],
                         movementType: "Money insertion"
                     }
 
@@ -119,6 +132,7 @@ const FormTransferFunds = (props) => {
         } else {
             setError("form__error--show");
             setInputsErrors(errorsInputs);
+            console.log(errorsInputs);
         }
     }
 
@@ -156,15 +170,14 @@ const FormTransferFunds = (props) => {
                             <p className="form__error--text">{errorInfo}</p>
                         </div>
                     </div>
-                    <div className="form__form__cnt dash-form__form__cnt">
-                        <select className="form__form__select" value={accountSelected} onChange={handleDropdownChange}>
-                            <option defaultValue disabled>Select the account:</option>
-                            <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
-                            <option value={accountsInfo[1].accountNumber}>Dolar account - {accountsInfo[1].accountNumber}</option>
-                        </select>
-                    </div>
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        <label>Currency</label>
+                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
+                        )}
+
+                    </div>
+
+                    <div className="form__form__cnt dash-form__form__cnt ">
+                        <label className="dash-form__label">Currency</label>
                         <div className="dash-form__form__cnt--radio">
                             <div>
                                 <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
@@ -177,14 +190,17 @@ const FormTransferFunds = (props) => {
                         </div>
                     </div>
 
-                    <div className="form__form__cnt dash-form__form__cnt ">
-                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
-                        )}
-
+                    <div className="form__form__cnt  dash-form__form__cnt">
+                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange}>
+                            <option defaultValue disabled>Select the account:</option>
+                            <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
+                            <option value={accountsInfo[1].accountNumber}>Dolar account - {accountsInfo[1].accountNumber}</option>
+                        </select>
                     </div>
+
                     <div className=" form__cnt form__cnt__submit
-                form__submit">
-                        <button name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
+                form__submit dash-form__submit">
+                        <button name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn">
                             Submit
                         </button>
                     </div>
