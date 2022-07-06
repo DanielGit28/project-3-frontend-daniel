@@ -21,12 +21,9 @@
         &-activate {
             z-index: 2;
             //padding: 4vw;
-            background-color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-right: 0.0625rem solid $nav-background-low-opacity;
-            border-bottom: 0.0625rem solid $nav-background-low-opacity;
             width: 20vw;
             transition: width 0.5s ease;
             
@@ -36,10 +33,12 @@
             }
 
             &__icon {
-                width: 4vw;
+                width: 20vw;
                 height: 4vw;
                 
-
+                @media (min-width: $tablet-bkp) {
+                    width: 9vw;
+                }
                 //transition: opacity 0.5s ease;
                 &:hover {
                     opacity: 0.5;
@@ -48,8 +47,10 @@
 
                 &-cnt {
                     padding: 0;
-                    background-color: transparent;
-                    border: 0;
+                    background-color: white;
+                    border: white;
+                    border-right: 0.0625rem solid $nav-background-low-opacity;
+            border-bottom: 0.0625rem solid $nav-background-low-opacity;
                     width: 20vw;
                     transition: width 0.5s ease;
 
@@ -98,7 +99,7 @@
             }
 
             &__logo {
-                font-size: 2.5rem;
+                font-size: 3rem;
                 @media (min-width: $tablet-bkp) {
                     font-size: 3rem;
                 }
@@ -127,7 +128,7 @@
                 &--link {
                     color: black;
                     padding: 0.2rem 0;
-                    font-size: 2rem;
+                    font-size: 2.1rem;
                     transition: font-size 0.5s ease;
                     transition: text-decoration 0.5s ease;
                     text-underline-offset: var(--offset, 0.2em);
@@ -135,7 +136,7 @@
                     text-decoration: underline 0.15rem rgba(255, 255, 255, 0);
                     transition: text-underline-offset 0.3s, text-decoration-color 0.3s;
                     @media (min-width: $tablet-bkp) {
-                        font-size: 2.5rem;
+                        font-size: 2.3rem;
                     }
                     &:hover {
                         text-decoration-color: $extra-color;

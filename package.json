@@ -4,13 +4,14 @@
   "private": true,
   "engines": {
     "npm": "8.5.3",
-    "node": "16.13.2" 
+    "node": "16.13.2"
   },
   "dependencies": {
     "node-fetch": "^3.2.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
+    "react-number-format": "^4.9.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "sass": "^1.53.0",

@@ -112,20 +112,16 @@ const Navbar = (props) => {
 
     return (
         <div className="nav__root" ref={navRoot}>
-            <div className="nav__cnt-activate">
-                <div className="nav__cnt-activate__icon-cnt">
-                    {isNavOpen &&
-                        <button className="nav__cnt-activate__icon-cnt" onClick={() => { navOnClick(false) }} >
+            {isNavOpen &&
+                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" onClick={() => { navOnClick(false) }} >
                             <IoMdClose className="nav__cnt-activate__icon" />
                         </button>
                     }
                     {isNavOpen === false &&
-                        <button className="nav__cnt-activate__icon-cnt" onClick={() => { navOnClick(true) }}>
+                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" onClick={() => { navOnClick(true) }}>
                             <AiOutlineMenu className="nav__cnt-activate__icon" />
                         </button>
                     }
-                </div>
-            </div>
             <div className="nav__cnt-open" ref={navInfo}>
                 <div className="nav__cnt-open__info">
                     <header className="nav__cnt-open__header">

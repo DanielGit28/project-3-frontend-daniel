@@ -1,0 +1,23 @@
+.error {
+    &__error {
+        width: 70%;
+        background-color: rgb(255, 73, 73);
+        margin: 2% 0;
+        //padding: 2%;
+        text-align: center;
+        animation-delay: 0.5s;
+        animation: fadeInDown 2s;
+
+        &--text {
+            font-size: 1rem;
+            color: white;
+            margin: 2% 0;
+            @media (min-width: $tablet-bkp) {
+                font-size: 1.2rem;
+            }
+        }
+        &--border {
+            border: 0.1rem solid #e22120;
+        }
+    }
+}

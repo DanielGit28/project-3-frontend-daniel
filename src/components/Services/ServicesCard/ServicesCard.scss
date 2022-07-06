@@ -1,0 +1,63 @@
+.service-card {
+    &__root {
+        width: 40%;
+        background-color: $extra-color;
+        height: 30vh;
+        margin: 5%;
+        padding: 0;
+        border: 0;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        display: flex;
+        transition: width .3s ease-in-out;
+        &--unique {
+            flex-direction: column;
+            width: 50vw;
+            //height: 100%;
+        }
+    }
+    &__info {
+        height: 100%;
+        display: flex;
+        width: 100%;
+    }
+    &__cnt {
+        width: 50%;
+        height: 100%;
+        border-radius: 1rem;
+        &-special {
+            height: 30vh;
+        }
+        &--left {
+            background-color: white;
+            &-special {
+                background-color: $extra-color;
+            }
+        }
+        &--right {
+            &-special {
+                background-color: white;
+            }
+        }
+        &-sub {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    }
+    &__icon {
+        font-size: 5rem;
+        &--special {
+            color: white;
+            &-key {
+                & path {
+                    fill: white;
+                }
+            }
+        }
+    }
+    &__form {
+        margin: -5.5% 0;
+    }
+}

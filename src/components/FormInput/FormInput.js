@@ -17,10 +17,9 @@ const FormInput = (props) => {
 
 
     useEffect(() => {
-
         for (let i = 0; i < errorSubmit.length; i++) {
             if (errorSubmit[i] === index) {
-                if(errorSubmit.length === 1) {
+                if (errorSubmit.length === 1) {
                     if (errorSubmit[i] === index) {
                         setUniqueError(true);
                     }
@@ -36,9 +35,7 @@ const FormInput = (props) => {
         if (inputUsed) {
 
             if (inputValue.length === 0) {
-
                 setLocalError(true);
-                console.log(inputError)
             } else if (inputInfo.info === "Email") {
                 var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                 if (emailPattern.test(inputValue)) {
@@ -70,14 +67,14 @@ const FormInput = (props) => {
             }
 
         }
-    }, [ inputUsed, localError, inputValue])
+    }, [inputUsed, localError, inputValue])
 
     if (inputInfo) {
         return (
             <div className={`form-input__root ${inputInfo.customCntClass}`}>
                 {inputInfo.labelRequired && <label className={`form__label ${inputInfo.customLabelClass}`} htmlFor={inputInfo.id} >{inputInfo.info}</label>}
 
-                <input ref={inputError} type={`${inputInfo.type}`} aria-labelledby={inputInfo.id} placeholder={inputInfo.placeholder} id={inputInfo.id} className={`form__form__inp ${inputInfo.customClassInput}`} value={inputValue || ""} onChange={e => {
+                <input ref={inputError} type={`${inputInfo.type}`} aria-labelledby={inputInfo.id} placeholder={inputInfo.placeholder} id={inputInfo.id} className={`form__form__inp ${inputInfo.customClassInput} ${((errorOnSubmit === true && localError === true)) && "form__error--inp"}`} value={inputValue || ""} onChange={e => {
                     handleInputChange(e, index)
                     setInputValue(e.target.value);
                     setInputUsed(true);
@@ -85,7 +82,7 @@ const FormInput = (props) => {
                 } />
 
 
-                <p ref={errorRefSubmit} className={`form__error ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"} `} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
+                <p ref={errorRefSubmit} className={`form__error  ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"} `} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
 
             </div>
         );

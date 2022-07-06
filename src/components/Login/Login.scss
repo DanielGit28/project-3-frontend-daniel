@@ -16,8 +16,8 @@
             justify-content: center;
             align-items: flex-end;
             width: 100%;
-            background-color: $light-color;
-            
+            background-color: $light-blue;
+
             color: black;
             height: 25vh;
             border-bottom: 1rem solid white;
@@ -38,17 +38,18 @@
             background-color: white;
             color: black;
             height: 75vh;
-            background-image: url("https://d2908q01vomqb2.cloudfront.net/9e6a55b6b4563e652a23be9d623ca5055c356940/2021/05/11/digital-currency.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
+            background-image: url("https://res.cloudinary.com/develop-daniel/image/upload/c_scale,e_vectorize,h_306,q_100/v1657080241/3d-pastel-piggy-bank-isolated-on-white-background-abstract-with-gold-picture-id1224746290_q2ryfx.jpg");
+            background-repeat: repeat-x;
+            background-size: 140% 100%;
             border-top: 1rem solid white;
-            
+
             /*
+            background-position: 50% 50%;
             @media (min-width: $tablet-bkp) {
-                justify-content: flex-start;
-                align-items: center;
-                width: 65%;
-                height: 100vh;
+                background-position: 20% 50%;
+            }
+            @media (min-width: $desktop-bkp) {
+                background-position: 0% 50%;
             }*/
         }
     }
@@ -56,46 +57,32 @@
         width: 85%;
         height: 80%;
         box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-        &__error {
-            width: 70%;
-            background-color: rgb(255, 73, 73);
-            margin: 2% 0;
-            //padding: 2%;
-            text-align: center;
-            animation-delay: 0.5s;
-            animation: fadeInDown 2s;
-
-            &--text {
-                font-size: 1rem;
-                color: white;
-                @media (min-width: $tablet-bkp) {
-                    font-size: 1.2rem;
-                }
-            }
-        }
         &--left {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background-color: $dark-color;
+            background-color: $dark-blue;
             //box-shadow: $brown -5px 5px 10px;
-            transition: 1s ease-in-out;
-            width: 60%;
+            transition: .5s ease-in-out;
+            width: 70%;
 
             height: 20vh;
-            transition: transform 1s ease;
-            transition: z-index .5s ease;
-            transition: opacity .5s ease;
+            transition: transform .5s ease;
+            transition: z-index 0.5s ease;
+            transition: opacity 0.5s ease;
             opacity: 1;
             color: white;
             //transform: translateY(20%);
             @media (min-width: $tablet-bkp) {
-                //width: 75%;
+                width: 60%;
                 //transform: translateY(0);
                 top: 0;
                 height: 80%;
+            }
+            @media (min-width: 1400px) {
+                width: 50%;
             }
             //Konrad logo
             & svg path {
@@ -111,11 +98,14 @@
             align-items: center;
             justify-content: center;
             background-color: white;
-            transition: 1s ease-in-out;
-
+            transition: .5s ease-in-out;
+            width: 70%;
             @media (min-width: $tablet-bkp) {
                 height: 95%;
-                width: 70%;
+                width: 60%;
+            }
+            @media (min-width: 1400px) {
+                width: 50%;
             }
             //&:hover {transform: translateX(35%); }
         }
@@ -150,7 +140,6 @@
             &:hover {
                 letter-spacing: 3px;
                 @media (min-width: $tablet-bkp) {
-                    
                 }
                 @media (min-width: $desktop-bkp) {
                     letter-spacing: 8px;
@@ -188,18 +177,13 @@
         }
         &__submit {
             width: 70%;
-            background-color: $light-color;
-            padding: 3%;
+            background-color: $extra-color;
+
             font-size: 1.2rem;
             color: white;
             border: 0;
             border-radius: 5px;
-            @media (min-width: $tablet-bkp) {
-                padding: 2%;
-            }
-            &:hover {
-                background-color: $dark-color;
-            }
+            border: 0.2rem solid $extra-color;
         }
     }
 }
@@ -209,7 +193,7 @@
     top: 20%;
 }
 .transform-y-20 {
-    transform-style:preserve-3d;
+    transform-style: preserve-3d;
     transform: translateY(30%);
 }
 .z-index-minus-1 {

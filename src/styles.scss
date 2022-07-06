@@ -8,6 +8,8 @@
 
 
 
+//Errors
+@import "./components/styles/errors.scss";
 
 //Components
 @import "./components/Forms/Form.scss";
@@ -37,6 +39,8 @@
 //Animations
 @import "./components/styles/animations/animations.scss";
 @import "./components/styles/animations/form-animations.scss";
+
+
 
 //Base
 @import "./base.scss";

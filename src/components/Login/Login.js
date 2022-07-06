@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BreakpointContext } from "../App";
 
 const Login = (props) => {
-    const { navState } = props;
+    const { isNavOpen } = props;
     const [formUserName, setFormUserName] = useState("");
     const [formPassword, setFormPassword] = useState("");
     const [error, setError] = useState(false);
@@ -14,6 +14,7 @@ const Login = (props) => {
     const userNameInp = useRef(null);
     const passwordInp = useRef(null);
     const breakPoint = useContext(BreakpointContext);
+    const submitBtn = useRef(null);
 
 
     const handleChangeInputs = (value, e) => {
@@ -69,6 +70,15 @@ const Login = (props) => {
                 });
         }
     }
+    useEffect(() => {
+        if(isNavOpen) {
+            //imgUploadCnt.current.classList.add("z-index-minus-1");
+            submitBtn.current.classList.add("z-index-minus-1");
+        } else {
+            //imgUploadCnt.current.classList.remove("z-index-minus-1");
+            submitBtn.current.classList.remove("z-index-minus-1");
+        }
+    },[isNavOpen])
 
 
     useEffect(() => {
@@ -76,7 +86,7 @@ const Login = (props) => {
         if (breakPoint.breakPoint[0] > 768) {
             titleCnt.current.classList.remove("transform-y-20");
             titleCnt.current.classList.add("transform-y-20");
-            if (navState) {
+            if (isNavOpen) {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.add("z-index-minus-1");
                 }, 150);
@@ -92,7 +102,10 @@ const Login = (props) => {
 
             }
         } else {
-            if (navState) {
+            titleCnt.current.classList.remove("transform-y-20");
+            titleCnt.current.classList.add("transform-y-20");
+            console.log("Adds transform")
+            if (isNavOpen) {
                 const timeout = setTimeout(() => {
                     titleCnt.current.classList.add("z-index-minus-1");
                 }, 150);
@@ -109,7 +122,47 @@ const Login = (props) => {
             }
         }
 
-    }, [breakPoint, navState])
+    }, [])
+
+    useEffect(() => {
+        console.log("breakpoint ", breakPoint.breakPoint[0])
+        if (breakPoint.breakPoint[0] > 768) {
+            titleCnt.current.classList.remove("transform-y-20");
+            titleCnt.current.classList.add("transform-y-20");
+            if (isNavOpen) {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.add("z-index-minus-1");
+                }, 150);
+
+                return () => clearTimeout(timeout);
+
+            } else {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.remove("z-index-minus-1");
+                }, 300);
+
+                return () => clearTimeout(timeout);
+
+            }
+        } else {
+            if (isNavOpen) {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.add("z-index-minus-1");
+                }, 150);
+
+                return () => clearTimeout(timeout);
+
+            } else {
+                const timeout = setTimeout(() => {
+                    titleCnt.current.classList.remove("z-index-minus-1");
+                }, 300);
+
+                return () => clearTimeout(timeout);
+
+            }
+        }
+
+    }, [breakPoint, isNavOpen])
 
     return (
         <div className="login__root">
@@ -127,9 +180,9 @@ const Login = (props) => {
 
                     <h2 className="login__sub-cnt__subtitle">Login</h2>
 
-                    {error && <div className="login__sub-cnt__error">
-                        <p className="login__sub-cnt__error--text">{errorMessage1}</p>
-                        <p className="login__sub-cnt__error--text">{errorMessage2}</p>
+                    {error && <div className="error__error">
+                        <p className="error__error--text">{errorMessage1}</p>
+                        <p className="error__error--text">{errorMessage2}</p>
                     </div>}
                     <div className="login__sub-cnt__cnt">
                         <label className="login__sub-cnt__lbl" htmlFor="login_username" >Username</label>
@@ -141,8 +194,9 @@ const Login = (props) => {
                         <input ref={passwordInp} type={"password"} className="login__sub-cnt__inp" name="login_password" id="login_password" value={formPassword || ""} onChange={e => handleChangeInputs("password", e)} />
                     </div>
 
-
-                    <button className="login__sub-cnt__submit" type="submit">Login</button>
+                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit">
+                            Login
+                        </button>
                 </form>
             </div>
         </div>

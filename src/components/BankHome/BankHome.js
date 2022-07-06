@@ -20,7 +20,7 @@ const BankHome = (props) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [breakPoint] = useBreakpoint();
     const [loading, setLoading] = useState(true);
-
+    const bankRoot = useRef(null);
     const userEmail = localStorage.getItem("userLoggedEmail");
     let token = localStorage.getItem("JWT");
     if (token) {
@@ -34,6 +34,13 @@ const BankHome = (props) => {
             setIsMenuOpen(true);
         } else {
             setIsMenuOpen(false);
+        }
+    }
+
+    //Animation for loggin out
+    const isLogginOut = (logginOut) => {
+        if (logginOut) {
+            bankRoot.current.classList.add("fade-out");
         }
     }
 
@@ -56,51 +63,54 @@ const BankHome = (props) => {
                 );
             } else {
                 return (
-                    <BankContext.Provider value={{ breakPoint: breakPoint, userInfo: userInfo }}>
-                        <DashboardMenu menuState={menuState} isMenuOpen={isMenuOpen} />
-                        <NavbarDashboard menuState={menuState} userEmail={userEmail} isMenuOpen={isMenuOpen} />
+                    <BankContext.Provider value={{ breakPoint: breakPoint, userInfo: userInfo }} className="">
+                        <div ref={bankRoot}>
+                            <DashboardMenu menuState={menuState} isMenuOpen={isMenuOpen} />
+                            <NavbarDashboard menuState={menuState} userEmail={userEmail} isMenuOpen={isMenuOpen} isLogginOut={isLogginOut} />
 
-                        <div className="bank-home">
+                            <div className="bank-home">
 
 
-                            <div className="bank-home__info">
-                                {container === "Dashboard" &&
-                                    <div className="bank-home__cnt" >
-                                        <Dashboard userEmail={userEmail} />
-                                    </div>
+                                <div className="bank-home__info">
+                                    {container === "Dashboard" &&
+                                        <div className="bank-home__cnt" >
+                                            <Dashboard userEmail={userEmail} />
+                                        </div>
 
-                                }
-                                {container === "Profile" &&
-                                    <div className="bank-home__cnt" >
-                                        <Profile />
-                                    </div>
+                                    }
+                                    {container === "Profile" &&
+                                        <div className="bank-home__cnt" >
+                                            <Profile />
+                                        </div>
 
-                                }
-                                {container === "AddMoney" &&
-                                    <div className="bank-home__cnt" >
-                                        <AddMoney isMenuOpen={isMenuOpen}/>
-                                    </div>
-                                }
-                                {container === "MoneyTransfer" &&
-                                    <div className="bank-home__cnt" >
-                                        <MoneyTransfer isMenuOpen={isMenuOpen} />
-                                    </div>
-                                }
-                                {container === "Services" &&
-                                    <div className="bank-home__cnt" >
-                                        <Services />
-                                    </div>
-                                }
-                                {container === "AccountHistory" &&
-                                    <div className="bank-home__cnt" >
-                                        <AccountHistory />
-                                    </div>
-                                }
+                                    }
+                                    {container === "AddMoney" &&
+                                        <div className="bank-home__cnt" >
+                                            <AddMoney isMenuOpen={isMenuOpen} />
+                                        </div>
+                                    }
+                                    {container === "MoneyTransfer" &&
+                                        <div className="bank-home__cnt" >
+                                            <MoneyTransfer isMenuOpen={isMenuOpen} />
+                                        </div>
+                                    }
+                                    {container === "Services" &&
+                                        <div className="bank-home__cnt" >
+                                            <Services />
+                                        </div>
+                                    }
+                                    {container === "AccountHistory" &&
+                                        <div className="bank-home__cnt" >
+                                            <AccountHistory />
+                                        </div>
+                                    }
+
+                                </div>
 
                             </div>
-
                         </div>
                     </BankContext.Provider >
+
                 );
             }
         } else {

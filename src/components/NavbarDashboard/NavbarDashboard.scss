@@ -13,7 +13,7 @@
             height: 12vh;
             background-color: $light-blue;
 
-            justify-content: space-between;
+            justify-content: flex-end;
             @media (min-width: $tablet-bkp) {
                 width: 80vw;
                 margin-left: 20vw;
@@ -24,7 +24,7 @@
             justify-content: center;
             width: 0;
             height: 100%;
-            width: 50vw;
+            width: 30vw;
             transition: width height 0.5s ease;
             transition: height 0.5s ease;
             
@@ -47,14 +47,27 @@
             }
         }
         &-home {
-            width: 50vw;
+            width: 70vw;
             height: 100%;
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            margin-right: 5%;
             @media (min-width: $tablet-bkp) {
-                width: 85vw;
-
+                width: 40vw;
+            }
+            @media (min-width: 1300px) {
+                width: 35vw;
+            }
+            &__cnt {
+                width: 50%;
+            }
+            &__img {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: white;
             }
             &__nav {
                 display: flex;
@@ -70,8 +83,37 @@
                     display: flex;
                 }
             }
+            &__logout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+
+                
+                &--link {
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-end;
+                    @media (min-width: $tablet-bkp) {
+                        flex-direction: row;
+                    }
+                    width: 100%;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+                &--icon {
+                    font-size: 1.5rem;
+                }
+                &--text {
+                    margin-left: 2%;
+                }
+            }
             &__user {
-                width: 30%;
+                width: 10%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -79,14 +121,13 @@
                 text-align: center;
                 color: white;
                 margin-right: 5%;
-                width: 100%;
+                
                 &-link {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     color: white;
-                    padding-right: 5%;
                     &:hover {
                         opacity: .8;
                     }

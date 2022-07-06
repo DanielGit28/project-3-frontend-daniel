@@ -16,7 +16,7 @@ const DashboardCard = (props) => {
                     <p className="dashboard-card__balance__text">Balance</p>
                     <p className="dashboard-card__balance__text ">
                         {account.currency === "Colon" && "₡"}
-                        {account.currency === "Dolar" && "$"}
+                        {account.currency === "Dollar" && "$"}
                         {Math.round((account.accountBalance + Number.EPSILON) * 100) / 100}
                     </p>
                 </div>

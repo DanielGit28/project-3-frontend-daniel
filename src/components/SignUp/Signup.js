@@ -4,6 +4,7 @@ import FormInput from "../FormInput/FormInput";
 import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineWarning } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 
 const Signup = (props) => {
     const { isNavOpen } = props;
@@ -20,6 +21,9 @@ const Signup = (props) => {
     const navigate = useNavigate();
     const selectIncome = useRef(null);
     const uploadImgBtn = useRef(null);
+
+    const [incomeError, setIncomeError] = useState(false);
+    const [uploadImgError, setUploadImgError] = useState(false);
 
     let token = localStorage.getItem("JWT");
     if (token) {
@@ -97,6 +101,7 @@ const Signup = (props) => {
             .then((data => {
                 setAccountImg(data.url);
                 setLoadingImg(false);
+                setUploadImgError(false);
             }))
             .catch(err => console.log("Error: ", err));
     }
@@ -110,7 +115,7 @@ const Signup = (props) => {
     const handleDropdownChange = (e) => {
         let value = Array.from(e.target.selectedOptions, option => option.value);
         setIncomeSource(value);
-        console.log(value)
+        setIncomeError(false);
     }
 
     const handleSubmit = (e) => {
@@ -123,8 +128,22 @@ const Signup = (props) => {
                 errorsInputs.push(i);
             }
         }
-        console.log(inputsValues);
-        console.log(formValidation);
+        if (incomeSource === "Select the income source:" && incomeSource) {
+            setError("form__error--show");
+            setIncomeError(true);
+            setErrorInfo("Must select an income source");
+            selectIncome.current.focus();
+        } else {
+            setIncomeError(false);
+        }
+        if (accountImg.length === 0) {
+            setError("form__error--show");
+            setUploadImgError(true);
+            setErrorInfo("Must select a profile picture");
+            uploadImgBtn.current.focus();
+        } else {
+            setUploadImgError(false);
+        }
         if (formValidation === true) {
             if (incomeSource !== "Select the income source:" && incomeSource) {
                 if (inputsValues[3] === inputsValues[4]) {
@@ -154,6 +173,7 @@ const Signup = (props) => {
 
                     } else {
                         setError("form__error--show");
+                        setUploadImgError(true);
                         setErrorInfo("Must select a profile picture");
                         uploadImgBtn.current.focus();
                     }
@@ -164,6 +184,7 @@ const Signup = (props) => {
                 }
             } else {
                 setError("form__error--show");
+                setIncomeError(true);
                 setErrorInfo("Must select an income source");
                 selectIncome.current.focus();
             }
@@ -171,39 +192,41 @@ const Signup = (props) => {
         } else {
             setError("form__error--show");
             setInputsErrors(errorsInputs);
+            setErrorInfo("Wrong or missing information. Check the information again.");
         }
+
 
     }
 
     useEffect(() => {
-        if(isNavOpen) {
+        if (isNavOpen) {
             imgUploadCnt.current.classList.add("z-index-minus-1");
             submitBtn.current.classList.add("z-index-minus-1");
         } else {
             imgUploadCnt.current.classList.remove("z-index-minus-1");
             submitBtn.current.classList.remove("z-index-minus-1");
         }
-    },[isNavOpen])
+    }, [isNavOpen])
 
 
     return (
-        <div className="form__root signup__form ">
-            
+        <div className="form__root signup__root">
+
             <div className="form__cnt form__info__cnt signup__cnt__title">
-            <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k signup__logo-svg" width="3rem" height="3rem" viewBox="0 0 183.78667 184.03999">
+                <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k signup__logo-svg" width="3rem" height="3rem" viewBox="0 0 183.78667 184.03999">
                     <path className="kg-logo__k__fill signup__logo-path" d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z"></path>
                 </svg>
                 <h1 className="form__info__title ">Create account</h1>
 
 
             </div>
-            <form className="form__form" onSubmit={handleSubmit}>
-                <div className={`form__error ${error.length > 0 && "form__error--90"} ${error}`}>
-                    <div className="form__error__box">
-                        <AiOutlineWarning className="form__error--icon" />
-                        <p className="form__error--text">{errorInfo}</p>
-                    </div>
-                </div>
+            <form className="form__form signup__form" onSubmit={handleSubmit}>
+                {error.length > 0 && <div className={`error__error  signup__error`}>
+                    
+                    <p className="error__error--text">{errorInfo}</p>
+
+                </div>}
+
                 <div className="form__form__cnt form__form__cnt--row">
                     <FormInput key={0} inputInfo={formInfo[0]} handleInputChange={handleInputChange} index={0} errorSubmit={inputsErrors} />
                     <FormInput key={1} inputInfo={formInfo[1]} handleInputChange={handleInputChange} index={1} errorSubmit={inputsErrors} />
@@ -218,7 +241,7 @@ const Signup = (props) => {
 
                 </div>
                 <div className="form__form__cnt">
-                    <select ref={selectIncome} className="form__form__select" value={incomeSource} onChange={handleDropdownChange}>
+                    <select ref={selectIncome} className={`form__form__select ${incomeError === true && "form__error--inp"}`} value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
                         <option className="form__form__select-opt" value={"Employed"}>Employed</option>
                         <option className="form__form__select-opt" value={"Business Owner"}>Business Owner</option>
@@ -230,18 +253,20 @@ const Signup = (props) => {
                 </div>
 
                 <div className="form__form__cnt signup__cnt__img">
-                    <label className="form__label signup__text signup__img__label" htmlFor={"form-img"} >Select a profile picture</label>
+                    <label className={`form__label signup__text signup__img__label ${uploadImgError === true && "signup__error--color"}`} htmlFor={"form-img"} >Select a profile picture</label>
+                    {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="signup__img__visualizer " />}
+                    {accountImg.length === 0 && <CgProfile className="signup__img__loader" />}
                     <div className="signup__img__root">
                         <div ref={imgUploadCnt} className="signup__img__cnt">
                             <input ref={uploadImgBtn} type={"file"} id="form-img" aria-labelledby="form-img" onChange={e => uploadImg(e)} name="form-img" className="signup__img__inp" />
                             <FiUpload />
                         </div>
-                        {accountImg.length > 0 && <img src={accountImg} alt={"Profile"} className="signup__img__visualizer " />}
+
                     </div>
 
                 </div>
                 <div className="form__form__cnt signup__cnt__img form__submit">
-                <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
+                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
                         Submit
                     </button>
                 </div>
@@ -249,8 +274,8 @@ const Signup = (props) => {
                 <div className=" form__cnt form__cnt__login
                 ">
                     <p className="form__cnt__login--text">Already have an account ? <Link to={"/login"} className="form__cnt__login--link form__cnt__login--text" >Login</Link></p>
-                    
-                    
+
+
                 </div>
             </form>
         </div>

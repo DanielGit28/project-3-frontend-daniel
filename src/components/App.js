@@ -31,7 +31,7 @@ const App = (props) => {
           }
           {container === "Login" &&
             <div className="app__cnt" >
-              <Login navState={navOpen}/>
+              <Login isNavOpen={navOpen}/>
             </div>
 
           }
