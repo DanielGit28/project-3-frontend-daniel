@@ -4,6 +4,7 @@ import FormInput from "../../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
 import { BankContext } from "../../BankHome/BankHome";
 import NumberFormat from 'react-number-format';
+import {IoMdWarning} from "react-icons/io";
 
 const FormTransferFunds = (props) => {
     const { isMenuOpen } = props;
@@ -22,6 +23,7 @@ const FormTransferFunds = (props) => {
     const amountInp = useRef(null);
     const selectAccount = useRef(null);
     const submitBtn = useRef(null);
+    const [currencyExchange, setCurrencyExchange] = useState("");
 
     const [accountSelected, setAccountSelected] = useState("Select the account:");
     const [currency, setCurrency] = useState(null);
@@ -152,6 +154,12 @@ const FormTransferFunds = (props) => {
 
     useEffect(() => {
         setLoading(true);
+        fetch("https://tipodecambio.paginasweb.cr/api/")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setCurrencyExchange(data);
+            })
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -179,19 +187,19 @@ const FormTransferFunds = (props) => {
     if (loading === false) {
         return (
             <div ref={form} className="form__root dash-form__root">
-                <div className="form__cnt form__info__cnt">
+                <div className="form__cnt form__info__cnt dash-form__form__cnt--title">
                     <h1 className="form__info__title">Add funds</h1>
 
 
                 </div>
                 <form className="form__form dash-form__form" onSubmit={handleSubmit}>
-                    {error.length > 0 && <div className={`error__error  signup__error`}>
-
-                        <p className="error__error--text">{errorInfo}</p>
+                    {error.length > 0 && <div className={`error__error  signup__error error__error--transparent error__dash`}>
+                        <IoMdWarning className="error__icon"/>
+                        <p className="error__error--text error__text--dash">{errorInfo}</p>
 
                     </div>}
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
+                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} dash={true}/>
                         )}
 
                     </div>
@@ -201,32 +209,35 @@ const FormTransferFunds = (props) => {
                             handleAmountChange(e)
                         }
                         } />
+                        <p className="dash-form__form__cnt--balance dash-form__form__cnt--balance-end">Exchange rate for buying: ₡{currencyExchange.compra}</p>
+                        <p className="dash-form__form__cnt--balance dash-form__form__cnt--balance-end">Exchange rate for selling: ₡{currencyExchange.venta}</p>
 
                     </div>
 
-                    <div className="form__form__cnt dash-form__form__cnt ">
-                        <label className="dash-form__label">Currency</label>
-                        <div className="dash-form__form__cnt--radio">
+                    <div className="form__form__cnt dash-form__form__cnt  ">
+                        <label className="dash-form__label" htmlFor="transfer-funds-currency-input-radio">Currency</label>
+                        <div className="dash-form__form__cnt--radio" >
                             <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
-                                <label ref={inputColon} htmlFor="form-add-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
+                                <input className="form__form__inp-radio dash-form__inp" id="transfer-funds-currency-colon" name="transfer-funds-currency-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} aria-labelledby="transfer-funds-currency-colon" />
+                                <label ref={inputColon} htmlFor="transfer-funds-currency-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
                             </div>
                             <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-dollar" name="form-add-dollar" type={"radio"} value={"Dollar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dollar"} />
-                                <label ref={inputDollar} htmlFor="form-add-dollar" className="dash-form__inp__label dash-form__inp__label--2">Dollar</label>
+                                <input className="form__form__inp-radio dash-form__inp" id="transfer-funds-currency-dollar" name="transfer-funds-currency-dollar" type={"radio"} value={"Dollar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dollar"} aria-labelledby="transfer-funds-currency-dollar" />
+                                <label ref={inputDollar} htmlFor="transfer-funds-currency-dollar" className="dash-form__inp__label dash-form__inp__label--2">Dollar</label>
                             </div>
                         </div>
                     </div>
 
                     <div className="form__form__cnt  dash-form__form__cnt">
-                        <select ref={selectAccount} className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange}>
+                    <label className="form__label dash-form__label" htmlFor="add-funds-destination-account-select">Destination account</label>
+                        <select ref={selectAccount} className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id="add-funds-destination-account-select" aria-labelledby="add-funds-destination-account-select" name="add-funds-destination-account-select" >
                             <option defaultValue disabled>Select the account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dollar account - {accountsInfo[1].accountNumber}</option>
                         </select>
                     </div>
 
-                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn">
+                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn" aria-label="Add funds submit button">
                         Submit
                     </button>
 

@@ -241,7 +241,8 @@ const Signup = (props) => {
 
                 </div>
                 <div className="form__form__cnt">
-                    <select ref={selectIncome} className={`form__form__select ${incomeError === true && "form__error--inp"}`} value={incomeSource} onChange={handleDropdownChange}>
+                <label className={`form__label signup__text ${uploadImgError === true && "signup__error--color"}`} htmlFor={"form-select-income-source"} >Income source</label>
+                    <select ref={selectIncome} className={`form__form__select ${incomeError === true && "form__error--inp"}`} id="form-select-income-source" aria-labelledby="form-select-income-source" name="form-select-income-source" value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
                         <option className="form__form__select-opt" value={"Employed"}>Employed</option>
                         <option className="form__form__select-opt" value={"Business Owner"}>Business Owner</option>

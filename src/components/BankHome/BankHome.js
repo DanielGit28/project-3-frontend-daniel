@@ -64,7 +64,7 @@ const BankHome = (props) => {
             } else {
                 return (
                     <BankContext.Provider value={{ breakPoint: breakPoint, userInfo: userInfo }} className="">
-                        <div ref={bankRoot}>
+                        <main ref={bankRoot}>
                             <DashboardMenu menuState={menuState} isMenuOpen={isMenuOpen} />
                             <NavbarDashboard menuState={menuState} userEmail={userEmail} isMenuOpen={isMenuOpen} isLogginOut={isLogginOut} />
 
@@ -108,7 +108,7 @@ const BankHome = (props) => {
                                 </div>
 
                             </div>
-                        </div>
+                        </main>
                     </BankContext.Provider >
 
                 );

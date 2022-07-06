@@ -113,12 +113,12 @@ const Navbar = (props) => {
     return (
         <div className="nav__root" ref={navRoot}>
             {isNavOpen &&
-                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" onClick={() => { navOnClick(false) }} >
+                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Close navbar button" onClick={() => { navOnClick(false) }} >
                             <IoMdClose className="nav__cnt-activate__icon" />
                         </button>
                     }
                     {isNavOpen === false &&
-                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" onClick={() => { navOnClick(true) }}>
+                        <button className="nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Open navbar button" onClick={() => { navOnClick(true) }}>
                             <AiOutlineMenu className="nav__cnt-activate__icon" />
                         </button>
                     }
@@ -142,13 +142,13 @@ const Navbar = (props) => {
                     <div className="nav__cnt-open__social-links-cnt">
                         <ul className="nav__cnt-open__social-links">
                             <li>
-                                <a href={"https://www.instagram.com/konradgroup/"} className="nav__cnt-open__social-links--link" ><AiOutlineInstagram /></a>
+                                <a href={"https://www.instagram.com/konradgroup/"} className="nav__cnt-open__social-links--link" aria-label="Konrad Bank Instagram Link"><AiOutlineInstagram /></a>
                             </li>
                             <li>
-                                <a href={"https://www.facebook.com/konradgroup/"} className="nav__cnt-open__social-links--link" ><FaFacebookF /></a>
+                                <a href={"https://www.facebook.com/konradgroup/"} className="nav__cnt-open__social-links--link" aria-label="Konrad Bank Facebook Link" ><FaFacebookF /></a>
                             </li>
                             <li>
-                                <a href={"https://twitter.com/konradgroup"} className="nav__cnt-open__social-links--link" ><AiOutlineTwitter /></a>
+                                <a href={"https://twitter.com/konradgroup"} className="nav__cnt-open__social-links--link"aria-label="Konrad Bank Twitter Link" ><AiOutlineTwitter /></a>
                             </li>
                         </ul>
                     </div>

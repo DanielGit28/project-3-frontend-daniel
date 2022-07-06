@@ -2,19 +2,28 @@
     &__root {
         width: 50vw;
         min-height: 40vh;
+        background-color: $light-blue;
     }
     &__form {
         min-height:40vh;
         margin: 0;
         margin-top: 5%;
+        
         &__cnt {
             margin: 2%;
             min-height: 5rem;
-            &--account {
-                align-items: flex-end;
+            &--title {
+                background-color: $dark-blue;
             }
+            
             &--balance {
-                color: $extra-color;
+                //color: $extra-color;
+                text-align: end;
+                width: 100%;
+                font-size: 1.3rem;
+                &-end {
+                    text-align: end;
+                }
             }
             &--radio {
                 display: flex;
@@ -70,16 +79,18 @@
             }
             &--1 {
                 border-radius: 25px 0 0 25px;
-                font-weight: 600;
+                
                 margin-right: 1px;
                 &:hover {
+                    font-weight: 600;
                     border-color: $extra-color;
                 }
+                
             }
             &--2 {
                 border-radius: 0 25px 25px 0;
-                font-weight: 600;
                 &:hover {
+                    font-weight: 600;
                     border-color: $extra-color;
                 }
             }
@@ -95,4 +106,5 @@
 .radio-selected {
     background-color: white;
     color: black;
+    font-weight: 600;
 }

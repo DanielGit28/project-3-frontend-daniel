@@ -21,7 +21,7 @@ const App = (props) => {
   }
   return (
     <BreakpointContext.Provider value={{ breakPoint: breakPoint }}>
-      <div className="app">
+      <main className="app">
         <Navbar navOpen={false} container={container} navState={navState} />
         <div className="app__info">
           {container === "Home" &&
@@ -43,7 +43,7 @@ const App = (props) => {
 
         </div>
 
-      </div>
+      </main>
     </BreakpointContext.Provider >
   );
 }

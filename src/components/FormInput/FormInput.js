@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 
 
 const FormInput = (props) => {
-    const { inputInfo, handleInputChange, index, errorSubmit } = props;
+    const { inputInfo, handleInputChange, index, errorSubmit, dash } = props;
     const [inputValue, setInputValue] = useState("");
     const errorRef = useRef(null);
     const inputError = useRef(null);
@@ -82,7 +82,7 @@ const FormInput = (props) => {
                 } />
 
 
-                <p ref={errorRefSubmit} className={`form__error  ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"} `} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
+                <p ref={errorRefSubmit} className={`form__error  ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"}  ${dash && "error__error--dash"}`} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
 
             </div>
         );

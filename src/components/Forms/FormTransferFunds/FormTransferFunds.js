@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import FormInput from "../../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
 import { BankContext } from "../../BankHome/BankHome";
-import { AiOutlineWarning } from "react-icons/ai";
+import {IoMdWarning} from "react-icons/io";
 import NumberFormat from 'react-number-format';
 
 const FormTransferFunds = (props) => {
@@ -25,6 +25,7 @@ const FormTransferFunds = (props) => {
     const inputDollar = useRef(null);
     const amountInp = useRef(null);
     const selectAccount = useRef(null);
+    const [currencyExchange, setCurrencyExchange] = useState("");
     const submitBtn = useRef(null);
     const navigate = useNavigate();
 
@@ -41,16 +42,16 @@ const FormTransferFunds = (props) => {
     }, [bankContext]);
 
     let formInfo = [
-    {
-        info: "Destination account",
-        id: "form-add-funds-destination-account",
-        type: "text",
-        placeholder: "",
-        errorInfo: "Enter a valid destination account (IBAN number)",
-        customClassInput: "dash-form__input",
-        customLabelClass: "dash-form__label",
-        labelRequired: true
-    }];
+        {
+            info: "Destination account",
+            id: "form-add-funds-destination-account",
+            type: "text",
+            placeholder: "",
+            errorInfo: "Enter a valid destination account (IBAN number)",
+            customClassInput: "dash-form__input",
+            customLabelClass: "dash-form__label",
+            labelRequired: true
+        }];
 
 
     const handleInputChange = (event, index) => {
@@ -61,30 +62,28 @@ const FormTransferFunds = (props) => {
     }
     const handleDropdownChange = (e) => {
         let value = Array.from(e.target.selectedOptions, option => option.value);
-        for(let i=0; i < accountsInfo.length; i++) {
+        for (let i = 0; i < accountsInfo.length; i++) {
             console.log(value === accountsInfo[i].accountNumber);
-            if(value[0] === accountsInfo[i].accountNumber) {
-                console.log("Account found")
+            if (value[0] === accountsInfo[i].accountNumber) {
+                accountsInfo[i].accountBalance = Math.round((accountsInfo[i].accountBalance + Number.EPSILON) * 100) / 100;
                 setAccountInfoSelected(accountsInfo[i]);
             }
         }
         setAccountSelected(value);
-        console.log(value);
-        //Validates the accounts
-        
+
     }
     const handleAmountChange = (e) => {
         let value = e.target.value;
         let newValue = value;
-        const comaRegex = /[.,\s]/g;
+        console.log(value);
 
-        if(value.charAt(0) === "$" || value.charAt(0) === "₡") {
+        if (value.charAt(0) === "$" || value.charAt(0) === "₡") {
             newValue = value.substring(1);
         }
         newValue = newValue.replace(/[.,\s]/g, '');
         setTransactionAmount(newValue);
     }
-    
+
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value);
@@ -103,10 +102,10 @@ const FormTransferFunds = (props) => {
         e.preventDefault();
         let formValidation = true;
         let errorsInputs = [];
-            if (inputsValues[0].length === 0) {
-                formValidation = false;
-                errorsInputs.push(0);
-            }
+        if (inputsValues[0].length === 0) {
+            formValidation = false;
+            errorsInputs.push(0);
+        }
 
         console.log(inputsValues);
         console.log(formValidation);
@@ -114,7 +113,7 @@ const FormTransferFunds = (props) => {
             if (accountSelected !== "Select the account:" && accountSelected && currency.length > 0) {
                 console.log(transactionAmount)
                 const numberRegex = /^\d+$/;
-                if (!numberRegex.test(transactionAmount/1) || transactionAmount/1 === 0) {
+                if (!numberRegex.test(transactionAmount / 1) || transactionAmount / 1 === 0) {
                     setError("form__error--show");
                     setErrorInfo("Amount must be a valid number");
                 } else {
@@ -123,7 +122,7 @@ const FormTransferFunds = (props) => {
                         originAccount: accountSelected[0],
                         destinationAccount: inputsValues[0],
                         currency: currency,
-                        amount: transactionAmount/1,
+                        amount: transactionAmount / 1,
                         movementType: "Money transfer"
                     }
 
@@ -154,7 +153,15 @@ const FormTransferFunds = (props) => {
     }
 
     useEffect(() => {
+
         setLoading(true);
+        fetch("https://tipodecambio.paginasweb.cr/api/")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setCurrencyExchange(data);
+            })
+
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -162,7 +169,6 @@ const FormTransferFunds = (props) => {
         fetch(`https://project-3-backend-daniel.herokuapp.com/bank-accounts/user/${userEmail}`, requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setAccountsInfo(data);
                 setLoading(false);
             })
@@ -170,14 +176,19 @@ const FormTransferFunds = (props) => {
     }, [token, userEmail, bankContext, isMenuOpen]);
 
     useEffect(() => {
-        if(loading === false) {
+        if (loading === false) {
             if (isMenuOpen) {
                 submitBtn.current.classList.add("z-index-minus-1");
             } else {
                 submitBtn.current.classList.remove("z-index-minus-1");
             }
         }
+
     }, [isMenuOpen, loading])
+
+    useEffect(() => {
+        setAccountSelected("Select the origin account:")
+    }, [])
 
     if (loading === false) {
         return (
@@ -188,50 +199,53 @@ const FormTransferFunds = (props) => {
 
                 </div>
                 <form className="form__form dash-form__form" onSubmit={handleSubmit}>
-                {error.length > 0 && <div className={`error__error  signup__error`}>
+                    {error.length > 0 && <div className={`error__error  signup__error error__error--transparent error__dash`}>
+                        <IoMdWarning className="error__icon" />
+                        <p className="error__error--text error__text--dash">{errorInfo}</p>
 
-<p className="error__error--text">{errorInfo}</p>
-
-</div>}
-                    <div className="form__form__cnt dash-form__form__cnt dash-form__form__cnt--account">
-                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange}>
-                            <option defaultValue disabled>Select the origin account:</option>
+                    </div>}
+                    <div className="form__form__cnt dash-form__form__cnt ">
+                        <label className="form__label dash-form__label" htmlFor="transfer-funds-origin-account-select">Destination account</label>
+                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id="transfer-funds-origin-account-select" aria-labelledby="transfer-funds-origin-account-select" name="transfer-funds-origin-account-select" >
+                            <option defaultValue disabled value={"Select the origin account:"}>Select the origin account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dollar account - {accountsInfo[1].accountNumber}</option>
                         </select>
-                        <p className="dash-form__form__cnt--balance">Account balance: {accountInfoSelected.currency === "Colon" && "₡"}{accountInfoSelected.currency === "Dollar" && "$"}{accountInfoSelected.accountBalance}</p>
+                        <p className="dash-form__form__cnt--balance">Account balance: {accountInfoSelected.currency === "Colon" && "₡"}{accountInfoSelected.currency === "Dollar" && "$"}{/^(?:\d*\.\d{1,2}|\d+)$/.test(accountInfoSelected.accountBalance / 1) && accountInfoSelected.accountBalance}</p>
                     </div>
-                    <div className="form__form__cnt dash-form__form__cnt">
-                        <label className="form__label dash-form__label" htmlFor="form-add-funds-amount">Amount</label>
-                        <NumberFormat thousandSeparator={true} aria-labelledby={"form-add-funds-amount"} id={"form-add-funds-amount"} prefix={currencySign} className={"form__form__inp dash-form__input"} value={transactionAmount || ""} onChange={e => {
+                    <div className="form__form__cnt dash-form__form__cnt ">
+                        <label className="form__label dash-form__label" htmlFor="transfer-funds-amount">Amount</label>
+                        <NumberFormat thousandSeparator={true} aria-labelledby={"transfer-funds-amount"} id={"transfer-funds-amount"} prefix={currencySign} className={"form__form__inp dash-form__input"} value={transactionAmount || ""} onChange={e => {
                             handleAmountChange(e)
                         }
                         } />
-                        
+                        <p className="dash-form__form__cnt--balance dash-form__form__cnt--balance-end">Exchange rate for buying: ₡{currencyExchange.compra}</p>
+                        <p className="dash-form__form__cnt--balance dash-form__form__cnt--balance-end">Exchange rate for selling: ₡{currencyExchange.venta}</p>
+
 
                     </div>
                     <div className="form__form__cnt dash-form__form__cnt  ">
-                        <label className="dash-form__label">Currency</label>
+                        <label className="dash-form__label" htmlFor="transfer-funds-currency-input-radio">Currency</label>
                         <div className="dash-form__form__cnt--radio">
                             <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
-                                <label ref={inputColon} htmlFor="form-add-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
+                                <input className="form__form__inp-radio dash-form__inp" id="transfer-funds-currency-colon" name="transfer-funds-currency-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} aria-labelledby="transfer-funds-currency-colon" />
+                                <label ref={inputColon} htmlFor="transfer-funds-currency-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
                             </div>
                             <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-dollar" name="form-add-dollar" type={"radio"} value={"Dollar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dollar"} />
-                                <label ref={inputDollar} htmlFor="form-add-dollar" className="dash-form__inp__label dash-form__inp__label--2">Dollar</label>
+                                <input className="form__form__inp-radio dash-form__inp" id="transfer-funds-currency-dollar" name="transfer-funds-currency-dollar" type={"radio"} value={"Dollar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dollar"} aria-labelledby="transfer-funds-currency-dollar" />
+                                <label ref={inputDollar} htmlFor="transfer-funds-currency-dollar" className="dash-form__inp__label dash-form__inp__label--2">Dollar</label>
                             </div>
                         </div>
                     </div>
 
                     <div className="form__form__cnt dash-form__form__cnt">
-                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
+                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} dash={true} />
                         )}
 
                     </div>
-                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn">
-                            Submit
-                        </button>
+                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn" aria-label="Add funds submit button" >
+                        Submit
+                    </button>
                 </form>
             </div>
         );

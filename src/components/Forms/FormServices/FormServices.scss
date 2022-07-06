@@ -1,0 +1,49 @@
+.services-form {
+    &__root {
+        
+    }
+    &__closed {
+        width: 0;
+        height: 0;
+    }
+    &__close {
+        animation: build-out 1s ease;
+        width: 0;
+        height: 0;
+    visibility: hidden;
+    }
+    &__show {
+        
+        animation: build-down 1s ease;
+        width: 50vw;
+    min-height: 40vh;
+    visibility: visible;
+    }
+}
+
+@keyframes build-down {
+    0% {
+        visibility: hidden;
+        height: 0;
+        //width: 0;
+    }
+    100% {
+        visibility: visible;
+        //width: 50vw;
+        min-height: 40vh;
+    }
+}
+
+@keyframes build-out {
+    0% {
+        
+        visibility: visible;
+        width: 50vw;
+        min-height: 40vh;
+    }
+    100% {
+        visibility: hidden;
+        height: 0;
+        width: 0;
+    }
+}

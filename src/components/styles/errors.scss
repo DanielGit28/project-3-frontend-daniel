@@ -1,12 +1,19 @@
 .error {
+    &__dash {
+        border-radius: 1rem;
+    }
     &__error {
         width: 70%;
         background-color: rgb(255, 73, 73);
-        margin: 2% 0;
+        margin: 0% 0;
         //padding: 2%;
         text-align: center;
         animation-delay: 0.5s;
         animation: fadeInDown 2s;
+        &--transparent {
+            //background-color: transparent;
+            background-color: white;
+        }
 
         &--text {
             font-size: 1rem;
@@ -16,8 +23,22 @@
                 font-size: 1.2rem;
             }
         }
+        &--dash {
+            color: white;
+        }
         &--border {
             border: 0.1rem solid #e22120;
+        }
+    }
+    &__text {
+        &--dash {
+            color: #e22120;
+        }
+    }
+    &__icon {
+        font-size: 3rem;
+        & path {
+            fill: #e22120;
         }
     }
 }

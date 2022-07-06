@@ -194,7 +194,7 @@ const Login = (props) => {
                         <input ref={passwordInp} type={"password"} className="login__sub-cnt__inp" name="login_password" id="login_password" value={formPassword || ""} onChange={e => handleChangeInputs("password", e)} />
                     </div>
 
-                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit">
+                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit" aria-label="login submit button">
                             Login
                         </button>
                 </form>

@@ -6,7 +6,7 @@ import { BankContext } from "../../BankHome/BankHome";
 import NumberFormat from 'react-number-format';
 
 const FormServices = (props) => {
-    const { isMenuOpen } = props;
+    const { isMenuOpen, cardOpen } = props;
     const userEmail = localStorage.getItem("userLoggedEmail");
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState([""]);
@@ -22,6 +22,7 @@ const FormServices = (props) => {
     const amountInp = useRef(null);
     const selectAccount = useRef(null);
     const submitBtn = useRef(null);
+    const [firstTimeLoad, setFirstTimeLoad] = useState(false);
 
     const [accountSelected, setAccountSelected] = useState("Select the account:");
     const [currency, setCurrency] = useState(null);
@@ -166,6 +167,8 @@ const FormServices = (props) => {
 
     }, [token, userEmail, bankContext, isMenuOpen]);
 
+    
+
     useEffect(() => {
         if (loading === false) {
             if (isMenuOpen) {
@@ -176,9 +179,22 @@ const FormServices = (props) => {
         }
     }, [isMenuOpen, loading])
 
+    useEffect(() => {
+        console.log("first time")
+        setFirstTimeLoad(true);
+    },[])
+
+    useEffect(() => {
+        console.log("used")
+        if(cardOpen === false) {
+            setFirstTimeLoad(false)
+        }
+        
+    },[cardOpen])
+
     if (loading === false) {
         return (
-            <div ref={form} className="form__root dash-form__root">
+            <div ref={form} className={`form__root dash-form__root  hide services-form__closed ${cardOpen === false && firstTimeLoad === false && "services-form__close"} ${cardOpen && "services-form__show"}`}>
                 <div className="form__cnt form__info__cnt">
                     <h1 className="form__info__title">Service</h1>
 

@@ -82,12 +82,12 @@ const DashboardMenu = (props) => {
 
     if (!loading) {
         return (
-            <div ref={menuRoot} className="dash-menu__root">
+            <nav ref={menuRoot} className="dash-menu__root" aria-label="Dashboard menu">
                 <div className="dash-menu__cnt dash-menu__cnt--links">
 
                     <Link to={"/bank-home"} onClick={() => { dashLinkClick(false, "Home") }} ref={homeLink} className="dash-menu__opt-cnt">
                         <svg className="kg-logo__k dash-nav__nav-home__link-in" xmlns="http://www.w3.org/2000/svg" width="288" height="288" viewBox="0 0 183.787 184.04"><path d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z" fill="#ffffff" className="k-logo"></path></svg>
-                            <p className="dash-nav__nav-home__link-text">Konrad Bank</p>
+                            <h1 className="dash-nav__nav-home__link-text">Konrad Bank</h1>
                     </Link>
 
 
@@ -110,7 +110,7 @@ const DashboardMenu = (props) => {
                 </div>
                 
 
-            </div>
+            </nav>
         );
     }
 }

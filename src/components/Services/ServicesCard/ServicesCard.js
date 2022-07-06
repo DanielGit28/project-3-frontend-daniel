@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MdOutlineNetworkWifi, MdOutlineDataSaverOn, MdElectricalServices, MdWater } from "react-icons/md";
 import { GrLicense } from "react-icons/gr";
 import FormServices from "../../Forms/FormServices/FormServices";
@@ -9,10 +9,11 @@ const ServicesCard = (props) => {
     const [serviceIcon, setServiceIcon] = useState(null);
     const [icon, setIcon] = useState(null);
     const [cardOpen, setCardOpen] = useState(false);
+    const [cardHover, setCardHover] = useState(false);
 
 
     const handleCardClick = () => {
-        if(cardOpen === true) {
+        if (cardOpen === true) {
             setCardOpen(false);
             handlerOnlyOneCard(false, index);
         } else {
@@ -21,7 +22,6 @@ const ServicesCard = (props) => {
         }
     }
 
-    console.log(serviceTitle, special);
 
     useEffect(() => {
         if (serviceTitle === "Common services") {
@@ -38,7 +38,7 @@ const ServicesCard = (props) => {
 
 
     return (
-        <button onClick={handleCardClick} className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
+        <button onClick={handleCardClick}  className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
             <div className="service-card__info">
                 <div className={`service-card__cnt service-card__cnt--left ${special && "service-card__cnt--left-special"} ${cardOpen && "service-card__cnt-special"}`}>
                     <div className="service-card__cnt-sub">
@@ -52,17 +52,22 @@ const ServicesCard = (props) => {
                 </div>
                 <div className={`service-card__cnt service-card__cnt--right ${special && "service-card__cnt--right-special"}`}>
                     <div className="service-card__cnt-sub">
-                        {serviceInfo}
+                        <p className={`service-card__info__text ${special && "service-card__info__text--special"}`}>{serviceTitle}</p>
                     </div>
                 </div>
             </div>
-            <div className="service-card__form">
-                {cardOpen && <FormServices />}
+
+            <div className={`service-card__form  `}>
+                {serviceTitle === "Common services" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                {serviceTitle === "Insurances" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                {serviceTitle === "Permits" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                {serviceTitle === "Digital services" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
             </div>
 
 
         </button>
     );
 }
+
 
 export default ServicesCard;
