@@ -21,13 +21,17 @@
     }
     &__show {
         
-        width: 50vw;
+        width: 80vw;
         opacity: 1;
-        min-height: 64vh;
+        min-height: 50vh;
         visibility: visible;
         transition: height width 1s;
         border-top: 1px solid white;
         animation: build-down 1s ease;
+        @media (min-width: $tablet-bkp) {
+            width: 50vw;
+            min-height: 64vh;
+        }
     }
 
 }

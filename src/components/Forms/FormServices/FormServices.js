@@ -90,7 +90,7 @@ const FormServices = (props) => {
 
         if (formValidation === true) {
             if (accountSelected !== "Select the account") {
-                if (accountInfoSelected.accountBalance > transactionAmount) {
+                if (accountInfoSelected.accountBalance > transactionAmount || accountInfoSelected.accountBalance* currencyExchange.compra > transactionAmount) {
                     console.log(transactionAmount)
                     const numberRegex = /^\d+$/;
                     if (!numberRegex.test(transactionAmount / 1) || transactionAmount / 1 === 0) {
@@ -100,18 +100,23 @@ const FormServices = (props) => {
                         setError("");
                         setLoadingSubmit(true);
                         let currency;
+                        let serviceAmount = transactionAmount;
                         if (accountInfoSelected.currency === "Colon") {
                             currency = "Colon";
                         } else if (accountInfoSelected.currency === "Dollar") {
                             currency = "Dollar";
+                            serviceAmount = transactionAmount / currencyExchange.venta;
+                            serviceAmount = serviceAmount/1;
                         }
                         let service = {
                             bankAccount: accountSelected[0],
                             currency: currency,
-                            amount: transactionAmount,
+                            amount: serviceAmount,
+                            serviceType: serviceSelected[0],
                             state: "Payed",
                             user: userEmail
                         }
+                        console.log(service)
 
                         const requestOptions = {
                             method: 'POST',
@@ -119,7 +124,7 @@ const FormServices = (props) => {
                             body: JSON.stringify(service)
                         };
                         fetch(`https://project-3-backend-daniel.herokuapp.com/services`, requestOptions)
-                            .then(response => response.json())
+                            .then(response => response.text())
                             .then(data => {
                                 console.log(data);
                                 const timeout = setTimeout(() => {
@@ -155,6 +160,11 @@ const FormServices = (props) => {
 
     useEffect(() => {
         setLoading(true);
+        fetch("https://tipodecambio.paginasweb.cr/api/")
+            .then(response => response.json())
+            .then(data => {
+                setCurrencyExchange(data);
+            })
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -195,6 +205,8 @@ const FormServices = (props) => {
         }
     }, [isMenuOpen, loading, cardOpen])
 
+    
+
 
     if (loading === false) {
         return (
@@ -209,7 +221,7 @@ const FormServices = (props) => {
 
                     </div>}
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        <label className="form__label dash-form__label" htmlFor="transfer-funds-origin-account-select">Origin account</label>
+                        <label className="form__label dash-form__label services-form__label" htmlFor="transfer-funds-origin-account-select">Origin account</label>
                         <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id="transfer-funds-origin-account-select" aria-labelledby="transfer-funds-origin-account-select" name="transfer-funds-origin-account-select" >
                             <option defaultValue disabled value={"Select the origin account:"}>Select the origin account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>

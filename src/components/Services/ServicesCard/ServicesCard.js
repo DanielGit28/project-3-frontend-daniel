@@ -31,13 +31,13 @@ const ServicesCard = (props) => {
 
 
 
-   
+
 
 
 
 
     return (
-        <button  className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
+        <button className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
             <div className="service-card__info" onClick={handleCardClick}>
                 <div className={`service-card__cnt service-card__cnt--left ${special && "service-card__cnt--left-special"} ${cardOpen && "service-card__cnt-special"}`}>
                     <div className="service-card__cnt-sub">

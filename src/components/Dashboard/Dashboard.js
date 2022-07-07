@@ -11,7 +11,7 @@ const Dashboard = (props) => {
     if (token) {
         token = token.replace(/^"(.+(?="$))"$/, '$1');
     }
-    
+
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             })
     }, [token, userEmail]);
 
-    if(loading === false && accountsInfo !== "Token not valid") {
+    if (loading === false && accountsInfo !== "Token not valid") {
         return (
             <div className="dashboard__root">
                 <div className="dashboard__cnt dashboard__cnt-cards">
@@ -35,9 +35,9 @@ const Dashboard = (props) => {
                     <DashboardCard account={accountsInfo[1]} />
                 </div>
                 <div className="dashboard__cnt dashboard__cnt-charts">
-    
+
                 </div>
-    
+
             </div>
         );
     }

@@ -40,11 +40,14 @@
         cursor: pointer;
 
         &__text {
-            font-size: 1.8rem;
+            font-size: 1rem;
             color: white;
             font-weight: bold;
             padding: 2%;
             width: 85%;
+            @media (min-width: 400px) {
+                font-size: 1.3rem;
+            }
             @media (min-width: $tablet-bkp) {
                 font-size: 1.3rem;
             }

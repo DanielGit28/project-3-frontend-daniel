@@ -80,7 +80,7 @@ const BankHome = (props) => {
                                     }
                                     {container === "Profile" &&
                                         <div className="bank-home__cnt" >
-                                            <Profile />
+                                            <Profile isMenuOpen={isMenuOpen}/>
                                         </div>
 
                                     }
@@ -96,7 +96,7 @@ const BankHome = (props) => {
                                     }
                                     {container === "Services" &&
                                         <div className="bank-home__cnt" >
-                                            <Services />
+                                            <Services isMenuOpen={isMenuOpen}/>
                                         </div>
                                     }
                                     {container === "AccountHistory" &&

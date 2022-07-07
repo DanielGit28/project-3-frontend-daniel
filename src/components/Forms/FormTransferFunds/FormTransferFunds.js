@@ -125,7 +125,8 @@ const FormTransferFunds = (props) => {
                         destinationAccount: inputsValues[0],
                         currency: currency,
                         amount: transactionAmount / 1,
-                        movementType: "Money transfer"
+                        movementType: "Money transfer",
+                        user: userEmail
                     }
 
                     const requestOptions = {
@@ -256,7 +257,7 @@ const FormTransferFunds = (props) => {
 
 
                     <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit" aria-label="login submit button">
-                        {loadingSubmit === false && "Login"}
+                        {loadingSubmit === false && "Transfer"}
                         {loadingSubmit === true && <ButtonLoader />}
                     </button>
                 </form>
