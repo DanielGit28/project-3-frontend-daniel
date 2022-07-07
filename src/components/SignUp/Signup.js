@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineWarning } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 
 const Signup = (props) => {
     const { isNavOpen } = props;
@@ -21,6 +22,7 @@ const Signup = (props) => {
     const navigate = useNavigate();
     const selectIncome = useRef(null);
     const uploadImgBtn = useRef(null);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [incomeError, setIncomeError] = useState(false);
     const [uploadImgError, setUploadImgError] = useState(false);
@@ -148,6 +150,7 @@ const Signup = (props) => {
             if (incomeSource !== "Select the income source:" && incomeSource) {
                 if (inputsValues[3] === inputsValues[4]) {
                     if (accountImg.length > 0) {
+                        setLoadingSubmit(true);
 
                         let user = {
                             fullName: inputsValues[0],
@@ -167,7 +170,13 @@ const Signup = (props) => {
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data);
-                                navigate("/login");
+                                const timeout = setTimeout(() => {
+                                    setLoadingSubmit(false);
+                                    navigate("/login");
+                                }, 1500);
+                
+                                return () => clearTimeout(timeout);
+                                
 
                             })
 
@@ -240,8 +249,8 @@ const Signup = (props) => {
                     <FormInput key={4} inputInfo={formInfo[4]} handleInputChange={handleInputChange} index={4} errorSubmit={inputsErrors} />
 
                 </div>
-                <div className="form__form__cnt">
-                <label className={`form__label signup__text ${uploadImgError === true && "signup__error--color"}`} htmlFor={"form-select-income-source"} >Income source</label>
+                <div className="form__form__cnt signup__label">
+                <label className={`form__label signup__text`} htmlFor={"form-select-income-source"} >Income source</label>
                     <select ref={selectIncome} className={`form__form__select ${incomeError === true && "form__error--inp"}`} id="form-select-income-source" aria-labelledby="form-select-income-source" name="form-select-income-source" value={incomeSource} onChange={handleDropdownChange}>
                         <option defaultValue disabled>Select the income source:</option>
                         <option className="form__form__select-opt" value={"Employed"}>Employed</option>
@@ -268,7 +277,8 @@ const Signup = (props) => {
                 </div>
                 <div className="form__form__cnt signup__cnt__img form__submit">
                     <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn">
-                        Submit
+                    {loadingSubmit === false && "Submit"}
+                        {loadingSubmit === true && <ButtonLoader />}
                     </button>
                 </div>
 

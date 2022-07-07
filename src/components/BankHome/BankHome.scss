@@ -24,3 +24,10 @@
         color: white;
     }
 }
+
+.hide-y-overflow {
+    @media (max-width: $tablet-bkp) {
+        overflow-y: hidden;
+    }
+    
+}

@@ -64,7 +64,7 @@ const BankHome = (props) => {
             } else {
                 return (
                     <BankContext.Provider value={{ breakPoint: breakPoint, userInfo: userInfo }} className="">
-                        <main ref={bankRoot}>
+                        <main ref={bankRoot} className={`${isMenuOpen === true && "hide-y-overflow"}`}>
                             <DashboardMenu menuState={menuState} isMenuOpen={isMenuOpen} />
                             <NavbarDashboard menuState={menuState} userEmail={userEmail} isMenuOpen={isMenuOpen} isLogginOut={isLogginOut} />
 

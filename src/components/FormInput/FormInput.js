@@ -82,7 +82,7 @@ const FormInput = (props) => {
                 } />
 
 
-                <p ref={errorRefSubmit} className={`form__error  ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"}  ${dash && "error__error--dash"}`} id={`${inputInfo.id}-error`}>* {errorInfo}</p>
+                <p ref={errorRefSubmit} className={`form__error  ${errorOnSubmit && "form__error--show"} ${localError === false && "hide"}  ${dash && "error__error--dash"}`} id={`${inputInfo.id}-error`}>{`*${errorInfo}`}</p>
 
             </div>
         );

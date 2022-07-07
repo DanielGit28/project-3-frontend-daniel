@@ -1,49 +1,69 @@
 .services-form {
     &__root {
-        
+        transition: none;
     }
     &__closed {
         width: 0;
         height: 0;
     }
-    &__close {
-        animation: build-out 1s ease;
-        width: 0;
-        height: 0;
-    visibility: hidden;
+    &__form {
+        margin-top: 10%;
+    }
+    &__label {
+        text-align: start;
+    }
+    &__text {
+        margin-top: 5%;
+    }
+    &__hide {
+        visibility: hidden;
+        opacity: 0;
     }
     &__show {
         
-        animation: build-down 1s ease;
         width: 50vw;
-    min-height: 40vh;
-    visibility: visible;
+        opacity: 1;
+        min-height: 64vh;
+        visibility: visible;
+        transition: height width 1s;
+        border-top: 1px solid white;
+        animation: build-down 1s ease;
     }
+
 }
 
 @keyframes build-down {
     0% {
         visibility: hidden;
         height: 0;
+        opacity: 0;
         //width: 0;
     }
     100% {
         visibility: visible;
+        opacity: 1;
         //width: 50vw;
-        min-height: 40vh;
+        min-height: 64vh;
     }
 }
 
 @keyframes build-out {
     0% {
-        
         visibility: visible;
-        width: 50vw;
         min-height: 40vh;
     }
     100% {
         visibility: hidden;
         height: 0;
-        width: 0;
     }
 }
+
+/*
+<div ref={form} className={`form__root dash-form__root services-form__root  hide services-form__closed ${cardOpen === false && firstTimeLoad === false && "services-form__close"} ${cardOpen && "services-form__show"}`}>
+
+
+{serviceTitle === "Common services" && <FormServices cardOpen={cardOpen}  service={serviceTitle}/>}
+                {serviceTitle === "Insurances" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                {serviceTitle === "Permits" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                {serviceTitle === "Digital services" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+*/

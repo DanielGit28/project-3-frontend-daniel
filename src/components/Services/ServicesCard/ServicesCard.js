@@ -5,12 +5,19 @@ import FormServices from "../../Forms/FormServices/FormServices";
 
 const ServicesCard = (props) => {
     //isSelected determines if to show the form for the category service selected
-    const { serviceTitle, serviceInfo, isSelected, special, handlerOnlyOneCard, index } = props;
+    const { serviceTitle, serviceTypes, special, handlerOnlyOneCard, index } = props;
     const [serviceIcon, setServiceIcon] = useState(null);
+    const [accountSelected, setAccountSelected] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [accountsInfo, setAccountsInfo] = useState("");
     const [icon, setIcon] = useState(null);
     const [cardOpen, setCardOpen] = useState(false);
     const [cardHover, setCardHover] = useState(false);
-
+    const userEmail = localStorage.getItem("userLoggedEmail");
+    let token = localStorage.getItem("JWT");
+    if (token) {
+        token = token.replace(/^"(.+(?="$))"$/, '$1');
+    }
 
     const handleCardClick = () => {
         if (cardOpen === true) {
@@ -23,23 +30,15 @@ const ServicesCard = (props) => {
     }
 
 
-    useEffect(() => {
-        if (serviceTitle === "Common services") {
-            setIcon()
-        } else if (serviceTitle === "Insurances") {
 
-        } else if (serviceTitle === "Permits") {
+   
 
-        } else if (serviceTitle === "Digital services") {
-
-        }
-    }, [])
 
 
 
     return (
-        <button onClick={handleCardClick}  className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
-            <div className="service-card__info">
+        <button  className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
+            <div className="service-card__info" onClick={handleCardClick}>
                 <div className={`service-card__cnt service-card__cnt--left ${special && "service-card__cnt--left-special"} ${cardOpen && "service-card__cnt-special"}`}>
                     <div className="service-card__cnt-sub">
                         {serviceTitle === "Common services" && <MdElectricalServices className={`service-card__icon ${special && "service-card__icon--special"}`} />}
@@ -58,10 +57,7 @@ const ServicesCard = (props) => {
             </div>
 
             <div className={`service-card__form  `}>
-                {serviceTitle === "Common services" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
-                {serviceTitle === "Insurances" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
-                {serviceTitle === "Permits" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
-                {serviceTitle === "Digital services" && <FormServices cardOpen={cardOpen} service={serviceTitle}/>}
+                <FormServices cardOpen={cardOpen} serviceTitle={serviceTitle} serviceTypes={serviceTypes} />
             </div>
 
 

@@ -1,21 +1,25 @@
 .dashboard-card {
     &__root {
-        width: 80%;
+        width: 90%;
         display: flex;
         flex-direction: column;
         margin: 5%;
         margin-right: 4%;
-        background-color: $dark-blue;
-        color: white;
-        padding: 4%;
-        border-radius: 0.3rem;
+        background-color: white;
+        border: 0.3rem solid $extra-color;
+        color: black;
+        border-radius: 1rem;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        transition: transform .2s ease;
+        cursor: pointer;
+        padding: 0;
         @media (min-width: $desktop-bkp) {
             width: 47.5%;
         }
         &:hover {
-            opacity: .95;
+            opacity: 0.95;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            transform: scale(1.05);
         }
     }
     &__row {
@@ -24,13 +28,62 @@
     &__cnt {
         display: flex;
         margin-bottom: 5%;
+
+        &-general {
+            padding: 10% 4%;
+            width: 100%;
+        }
     }
     &__number {
+        background-color: $extra-color;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.2rem;
+        border-bottom-left-radius: 10rem;
+        border-bottom-right-radius: 10rem;
+        height:4rem;
+        @media (min-width: $tablet-bkp) {
+            height:3.5rem;
+        }
         &__text {
             font-size: 1.1rem;
+            color: white;
+            font-weight: 600;
+
             @media (min-width: $tablet-bkp) {
                 font-size: 1.3rem;
             }
+        }
+        &--invert {
+            border-bottom-left-radius: 0rem;
+        border-bottom-right-radius: 0rem;
+            border-top-left-radius: 10rem;
+            border-top-right-radius: 10rem;
+        }
+    }
+    &__info {
+        width: 50%;
+        &__text {
+            text-align: start;
+            width: 50%;
+            font-size: 1.2rem;
+        }
+    }
+    &__logo {
+        width: 12%;
+        height: 20%;
+        &__cnt {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            margin-right: 5%;
+            padding-right: 5%;
+            margin-bottom: 5%;
+        }
+        &__path {
+
         }
     }
 }

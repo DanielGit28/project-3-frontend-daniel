@@ -1,26 +1,70 @@
 .dash-form {
     &__root {
-        width: 50vw;
+        width: 90vw;
         min-height: 40vh;
         background-color: $light-blue;
+        @media (min-width: 500px) {
+            width: 75vw;
+        }
+        @media (min-width: $tablet-bkp) {
+            width: 60vw;
+        }
+        @media (min-width: $desktop-bkp) {
+            //width: 50vw;
+        }
+    }
+    &__cnt {
+        margin: 2%;
+        min-height: 5rem;
+        &__title {
+            background-color: white;
+            &--text{
+                color: $light-blue;
+            }
+        }
     }
     &__form {
-        min-height:40vh;
+        min-height: 40vh;
         margin: 0;
-        margin-top: 5%;
-        
+        margin-top: 3%;
+
+        &__sub-cnt {
+            &--special {
+                margin: 2% 0;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                @media (min-width: $desktop-bkp) {
+                    width: 50%;
+                    margin: 2%;
+                }
+            }
+        }
         &__cnt {
-            margin: 2%;
+            margin: 1%;
             min-height: 5rem;
             &--title {
-                background-color: $dark-blue;
+                background-color: white;
             }
-            
+            &--special {
+                flex-direction: column;
+                @media (min-width: $desktop-bkp) {
+                    flex-direction: row;
+                }
+            }
+
             &--balance {
                 //color: $extra-color;
                 text-align: end;
                 width: 100%;
-                font-size: 1.3rem;
+                font-size: 0.8rem;
+                @media (min-width: $tablet-bkp) {
+                    font-size: 0.9rem;
+                }
+                @media (min-width: $desktop-bkp) {
+                    font-size: 1.2rem;
+                }
                 &-end {
                     text-align: end;
                 }
@@ -36,20 +80,32 @@
     &__label {
         font-size: 1rem;
         @media (min-width: $tablet-bkp) {
+            font-size: 1.2rem;
+        }
+        @media (min-width: $desktop-bkp) {
             font-size: 1.4rem;
-          }
+        }
+        &--currency {
+            margin-bottom: 3%;
+        }
     }
     &__select {
-        height: 4rem;
         padding: 1.5% 2%;
         border: 0.0625rem solid $extra-color;
+        height: 2.5rem;
+        @media (min-width: $tablet-bkp) {
+            height: 4rem;
+        }
         &:focus {
             border: 0.2rem solid $extra-color;
         }
     }
     &__input {
-        height: 4rem;
         border: 0.0625rem solid $extra-color;
+        height: 2.5rem;
+        @media (min-width: $tablet-bkp) {
+            height: 4rem;
+        }
         &:focus {
             border: 0.2rem solid $extra-color;
         }
@@ -60,7 +116,7 @@
         height: 1px;
         width: 1px;
         margin: 6% 0;
-        
+
         &:hover {
             cursor: pointer;
         }
@@ -69,23 +125,25 @@
             text-align: center;
             height: 2rem;
             width: 2rem;
-            padding: 1rem 3rem;
+            padding: 1rem 2.5rem;
             border: 3px solid white;
             margin: 2rem -1px;
+            @media (min-width: $tablet-bkp) {
+                padding: 1rem 2rem;
+            }
             &:hover {
                 background-color: white;
                 color: black;
-                
             }
             &--1 {
                 border-radius: 25px 0 0 25px;
-                
+
                 margin-right: 1px;
+                margin-top: 2%;
                 &:hover {
                     font-weight: 600;
                     border-color: $extra-color;
                 }
-                
             }
             &--2 {
                 border-radius: 0 25px 25px 0;
@@ -98,7 +156,10 @@
     }
     &__submit {
         &__btn {
-            margin-bottom: 5%;
+            margin: 5% 0;
+            @media (min-width: $tablet-bkp) {
+                margin: 2.5% 0;
+            }
         }
     }
 }

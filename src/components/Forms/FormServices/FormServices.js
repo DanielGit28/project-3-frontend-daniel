@@ -4,9 +4,12 @@ import FormInput from "../../FormInput/FormInput";
 import { useNavigate } from "react-router-dom";
 import { BankContext } from "../../BankHome/BankHome";
 import NumberFormat from 'react-number-format';
+import { IoMdWarning } from "react-icons/io";
+import ButtonLoader from "../../ButtonLoader/ButtonLoader";
 
 const FormServices = (props) => {
-    const { isMenuOpen, cardOpen } = props;
+    const { isMenuOpen, cardOpen, serviceTitle, serviceTypes } = props;
+
     const userEmail = localStorage.getItem("userLoggedEmail");
     const [error, setError] = useState(""); // setError("form__error--show");
     const [inputsValues, setInputsValues] = useState([""]);
@@ -16,17 +19,20 @@ const FormServices = (props) => {
     const [loading, setLoading] = useState(true);
     const [currencySign, setCurrencySign] = useState("");
     const [transactionAmount, setTransactionAmount] = useState("");
+    const [accountInfoSelected, setAccountInfoSelected] = useState("");
     const form = useRef(null);
     const inputColon = useRef(null);
     const inputDollar = useRef(null);
     const amountInp = useRef(null);
     const selectAccount = useRef(null);
     const submitBtn = useRef(null);
-    const [firstTimeLoad, setFirstTimeLoad] = useState(false);
+    const [currencyExchange, setCurrencyExchange] = useState("");
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [accountSelected, setAccountSelected] = useState("Select the account:");
+    const [serviceSelected, setServiceSelected] = useState("Select the service:");
     const [currency, setCurrency] = useState(null);
-    
+
     const navigate = useNavigate();
 
     let token = localStorage.getItem("JWT");
@@ -43,103 +49,99 @@ const FormServices = (props) => {
         }
     }, [bankContext]);
 
-
-
-    let formInfo = [{
-        info: "Origin account",
-        id: "form-add-funds-origin-account",
-        type: "text",
-        placeholder: "",
-        errorInfo: "Enter a valid account (IBAN number)",
-        customClassInput: "dash-form__input",
-        customLabelClass: "dash-form__label",
-        labelRequired: true
-    }];
-
-
-    const handleInputChange = (event, index) => {
-
-        const inputs = [...inputsValues];
-        inputs[index] = event.target.value;
-        setInputsValues(inputs);
-    }
     const handleDropdownChange = (e) => {
         let value = Array.from(e.target.selectedOptions, option => option.value);
+        for (let i = 0; i < accountsInfo.length; i++) {
+            console.log(value === accountsInfo[i].accountNumber);
+            if (value[0] === accountsInfo[i].accountNumber) {
+                accountsInfo[i].accountBalance = Math.round((accountsInfo[i].accountBalance + Number.EPSILON) * 100) / 100;
+                setAccountInfoSelected(accountsInfo[i]);
+            }
+        }
         setAccountSelected(value);
+
+    }
+
+    const handleDropdownsServiceChange = (e) => {
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setServiceSelected(value);
         console.log(value)
     }
+
     const handleAmountChange = (e) => {
         let value = e.target.value;
         let newValue = value;
-        const comaRegex = /[.,\s]/g;
 
-        if(value.charAt(0) === "$" || value.charAt(0) === "₡") {
+        if (value.charAt(0) === "$" || value.charAt(0) === "₡") {
             newValue = value.substring(1);
         }
         newValue = newValue.replace(/[.,\s]/g, '');
         setTransactionAmount(newValue);
     }
-    
 
-    const handleCurrencyChange = (e) => {
-        setCurrency(e.target.value);
-        if (e.target.value === "Colon") {
-            inputColon.current.classList.add("radio-selected");
-            inputDollar.current.classList.remove("radio-selected");
-            setCurrencySign("₡");
-        } else if (e.target.value === "Dollar") {
-            inputColon.current.classList.remove("radio-selected");
-            inputDollar.current.classList.add("radio-selected");
-            setCurrencySign("$");
-        }
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formValidation = true;
         let errorsInputs = [];
-        if (inputsValues[0].length === 0) {
-            formValidation = false;
-            errorsInputs.push(0);
-        }
+        console.log(accountInfoSelected);
+        console.log(accountSelected);
 
 
-        console.log(inputsValues);
-        console.log(formValidation);
         if (formValidation === true) {
-            if (currency !== null && currency && accountSelected !== "Select the account:" && accountSelected) {
-                console.log(transactionAmount)
-                const numberRegex = /^\d+$/;
-                if (!numberRegex.test(transactionAmount/1) || transactionAmount/1 === 0) {
-                    setError("form__error--show");
-                    setErrorInfo("Amount must be a valid number");
-                } else {
-                    setError("");
-                    let movement = {
-                        originAccount: accountSelected[0],
-                        currency: currency,
-                        amount: transactionAmount/1,
-                        movementType: "Money insertion"
+            if (accountSelected !== "Select the account") {
+                if (accountInfoSelected.accountBalance > transactionAmount) {
+                    console.log(transactionAmount)
+                    const numberRegex = /^\d+$/;
+                    if (!numberRegex.test(transactionAmount / 1) || transactionAmount / 1 === 0) {
+                        setError("form__error--show");
+                        setErrorInfo("Amount must be a valid number");
+                    } else if (serviceSelected !== "Select the service:") {
+                        setError("");
+                        setLoadingSubmit(true);
+                        let currency;
+                        if (accountInfoSelected.currency === "Colon") {
+                            currency = "Colon";
+                        } else if (accountInfoSelected.currency === "Dollar") {
+                            currency = "Dollar";
+                        }
+                        let service = {
+                            bankAccount: accountSelected[0],
+                            currency: currency,
+                            amount: transactionAmount,
+                            state: "Payed",
+                            user: userEmail
+                        }
+
+                        const requestOptions = {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                            body: JSON.stringify(service)
+                        };
+                        fetch(`https://project-3-backend-daniel.herokuapp.com/services`, requestOptions)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                const timeout = setTimeout(() => {
+                                    setLoadingSubmit(false);
+                                    navigate("/bank-home");
+                                }, 1500);
+
+                                return () => clearTimeout(timeout);
+
+                            })
                     }
-
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                        body: JSON.stringify(movement)
-                    };
-                    console.log("Post made: ", movement);
-                    console.log("Stringify: ", JSON.stringify(movement));
-                    fetch(`https://project-3-backend-daniel.herokuapp.com/movements`, requestOptions)
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            navigate("/bank-home");
-
-                        })
+                    else {
+                        setError("form__error--show");
+                        setErrorInfo("Must select an account");
+                    }
+                } else {
+                    setError("form__error--show");
+                    setErrorInfo("Insuficient funds");
                 }
             } else {
                 setError("form__error--show");
-                setErrorInfo("Must select a currency and an account option");
+                setErrorInfo("Must select an account");
             }
 
         } else {
@@ -167,84 +169,77 @@ const FormServices = (props) => {
 
     }, [token, userEmail, bankContext, isMenuOpen]);
 
-    
+    useEffect(() => {
+        if (serviceTitle === "Common services") {
+            setTransactionAmount(Number("30000"));
+        } else if (serviceTitle === "Insurances") {
+            setTransactionAmount(Number("150000"));
+        } else if (serviceTitle === "Permits") {
+            setTransactionAmount(Number("90000"));
+
+        } else if (serviceTitle === "Digital services") {
+            setTransactionAmount(Number("50000"));
+        }
+    }, [])
 
     useEffect(() => {
         if (loading === false) {
-            if (isMenuOpen) {
-                submitBtn.current.classList.add("z-index-minus-1");
-            } else {
-                submitBtn.current.classList.remove("z-index-minus-1");
+            if (cardOpen === true) {
+                if (isMenuOpen) {
+                    submitBtn.current.classList.add("z-index-minus-1");
+                } else {
+                    submitBtn.current.classList.remove("z-index-minus-1");
+                }
             }
-        }
-    }, [isMenuOpen, loading])
 
-    useEffect(() => {
-        console.log("first time")
-        setFirstTimeLoad(true);
-    },[])
-
-    useEffect(() => {
-        console.log("used")
-        if(cardOpen === false) {
-            setFirstTimeLoad(false)
         }
-        
-    },[cardOpen])
+    }, [isMenuOpen, loading, cardOpen])
+
 
     if (loading === false) {
         return (
-            <div ref={form} className={`form__root dash-form__root  hide services-form__closed ${cardOpen === false && firstTimeLoad === false && "services-form__close"} ${cardOpen && "services-form__show"}`}>
-                <div className="form__cnt form__info__cnt">
-                    <h1 className="form__info__title">Service</h1>
-
-
+            <div ref={form} className={`form__root dash-form__root services-form__root  hide services-form__closed ${cardOpen === false && "services-form__close"} ${cardOpen && "services-form__show"}`}>
+                <div className="form__cnt form__info__cnt dash-form__cnt__title">
+                    <h1 className="form__info__title dash-form__cnt__title--text">{serviceTitle}</h1>
                 </div>
-                <form className="form__form dash-form__form" onSubmit={handleSubmit}>
-                    {error.length > 0 && <div className={`error__error  signup__error`}>
-
-                        <p className="error__error--text">{errorInfo}</p>
+                <form className="form__form dash-form__form services-form__form" onSubmit={handleSubmit}>
+                    {error.length > 0 && <div className={`error__error  signup__error error__error--transparent error__dash`}>
+                        <IoMdWarning className="error__icon" />
+                        <p className="error__error--text error__text--dash">{errorInfo}</p>
 
                     </div>}
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        {formInfo.map((input, index) => <FormInput key={index} inputInfo={input} handleInputChange={handleInputChange} index={index} errorSubmit={inputsErrors} />
-                        )}
-
+                        <label className="form__label dash-form__label" htmlFor="transfer-funds-origin-account-select">Origin account</label>
+                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id="transfer-funds-origin-account-select" aria-labelledby="transfer-funds-origin-account-select" name="transfer-funds-origin-account-select" >
+                            <option defaultValue disabled value={"Select the origin account:"}>Select the origin account:</option>
+                            <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
+                            <option value={accountsInfo[1].accountNumber}>Dollar account - {accountsInfo[1].accountNumber}</option>
+                        </select>
+                        <p className="dash-form__form__cnt--balance">Account balance: {accountInfoSelected.currency === "Colon" && "₡"}{accountInfoSelected.currency === "Dollar" && "$"}{/^(?:\d*\.\d{1,2}|\d+)$/.test(accountInfoSelected.accountBalance / 1) && accountInfoSelected.accountBalance}</p>
                     </div>
-                    <div className="form__form__cnt dash-form__form__cnt">
-                        <label className="form__label dash-form__label" htmlFor="form-add-funds-amount">Amount</label>
-                        <NumberFormat ref={amountInp} thousandSeparator={true} aria-labelledby={"form-add-funds-amount"} id={"form-add-funds-amount"} prefix={currencySign} className={"form__form__inp dash-form__input"} value={transactionAmount || ""} onChange={e => {
-                            handleAmountChange(e)
-                        }
-                        } />
+
+
+                    <div className="form__form__cnt dash-form__form__cnt ">
+                        <label className="form__label dash-form__label services-form__label" htmlFor="services-service-select">Service</label>
+                        <select className="form__form__select dash-form__select" value={serviceSelected} onChange={handleDropdownsServiceChange} id="services-service-select" aria-labelledby="services-service-select" name="services-service-select" >
+                            <option defaultValue disabled value={"Select the service:"}>Select the service:</option>
+                            {serviceTypes.map((service, index) => {
+                                return <option value={service} key={index}>{service}</option>;
+                            })}
+                        </select>
 
                     </div>
 
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        <label className="dash-form__label">Currency</label>
-                        <div className="dash-form__form__cnt--radio">
-                            <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-colon" name="form-add-colon" type={"radio"} value={"Colon"} onChange={e => handleCurrencyChange(e)} checked={currency === "Colon"} />
-                                <label ref={inputColon} htmlFor="form-add-colon" className="dash-form__inp__label dash-form__inp__label--1">Colon</label>
-                            </div>
-                            <div>
-                                <input className="form__form__inp-radio dash-form__inp" id="form-add-dollar" name="form-add-dollar" type={"radio"} value={"Dollar"} onChange={e => handleCurrencyChange(e)} checked={currency === "Dollar"} />
-                                <label ref={inputDollar} htmlFor="form-add-dollar" className="dash-form__inp__label dash-form__inp__label--2">Dollar</label>
-                            </div>
-                        </div>
+                        <p className="form__label dash-form__label services-form__label services-form__text" >Amount: ₡{transactionAmount} </p>
+
+
                     </div>
 
-                    <div className="form__form__cnt  dash-form__form__cnt">
-                        <select ref={selectAccount} className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange}>
-                            <option defaultValue disabled>Select the account:</option>
-                            <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
-                            <option value={accountsInfo[1].accountNumber}>Dollar account - {accountsInfo[1].accountNumber}</option>
-                        </select>
-                    </div>
-
-                    <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn dash-form__submit__btn">
-                        Submit
-                    </button>
+                    {cardOpen === true && <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit" aria-label="login submit button">
+                        {loadingSubmit === false && "Pay"}
+                        {loadingSubmit === true && <ButtonLoader />}
+                    </button>}
 
                 </form>
             </div>

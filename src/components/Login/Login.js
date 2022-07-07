@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BreakpointContext } from "../App";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 
 const Login = (props) => {
     const { isNavOpen } = props;
@@ -15,6 +16,7 @@ const Login = (props) => {
     const passwordInp = useRef(null);
     const breakPoint = useContext(BreakpointContext);
     const submitBtn = useRef(null);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
 
     const handleChangeInputs = (value, e) => {
@@ -47,6 +49,7 @@ const Login = (props) => {
         }
 
         if (formUserName.length > 0 && formPassword.length > 0) {
+            setLoadingSubmit(true);
             fetch('https://project-3-backend-daniel.herokuapp.com/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -60,25 +63,34 @@ const Login = (props) => {
                         setError(true);
                         setErrorMessage2("");
                         setErrorMessage1("Username and/or password invalid!");
+                        
                     } else {
                         setError(false);
                         localStorage.setItem("JWT", JSON.stringify(data));
                         localStorage.setItem("userLoggedEmail", formUserName);
+                        
                         navigate("/bank-home");
                     }
+
+                    const timeout = setTimeout(() => {
+                        setLoadingSubmit(false);
+                    }, 1500);
+    
+                    return () => clearTimeout(timeout);
+                    
 
                 });
         }
     }
     useEffect(() => {
-        if(isNavOpen) {
+        if (isNavOpen) {
             //imgUploadCnt.current.classList.add("z-index-minus-1");
             submitBtn.current.classList.add("z-index-minus-1");
         } else {
             //imgUploadCnt.current.classList.remove("z-index-minus-1");
             submitBtn.current.classList.remove("z-index-minus-1");
         }
-    },[isNavOpen])
+    }, [isNavOpen])
 
 
     useEffect(() => {
@@ -195,8 +207,9 @@ const Login = (props) => {
                     </div>
 
                     <button ref={submitBtn} name="submit-btn" type="submit" className="form__form__btn signup__cnt__submit form__submit__btn login__sub-cnt__submit" aria-label="login submit button">
-                            Login
-                        </button>
+                        {loadingSubmit === false && "Login"}
+                        {loadingSubmit === true && <ButtonLoader />}
+                    </button>
                 </form>
             </div>
         </div>

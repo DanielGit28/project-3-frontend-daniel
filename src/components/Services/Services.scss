@@ -5,6 +5,23 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        height: 100%;
+        min-height: 100%;
+        transition: flex-wrap 0.4s ease;
     }
 }
+
+/*
+
+
+if (onlyOneCard === true) {
+                            if (index === onlyCardIndex) {
+                                return <ServicesCard key={index} serviceTitle={service.serviceTitle} serviceInfo={service.serviceInfo} index={index} handlerOnlyOneCard={handlerOnlyOneCard} />;
+                            }
+                        } else {
+                            if (index === 2 || index === 3) {
+                                return <ServicesCard key={index} serviceTitle={service.serviceTitle} serviceInfo={service.serviceInfo} special={true} index={index} handlerOnlyOneCard={handlerOnlyOneCard} />;
+                            } else {
+                                return <ServicesCard key={index} serviceTitle={service.serviceTitle} serviceInfo={service.serviceInfo} index={index} handlerOnlyOneCard={handlerOnlyOneCard} />;
+                            }
+                        }
+*/
