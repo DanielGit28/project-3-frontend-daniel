@@ -200,7 +200,7 @@ const Home = (props) => {
         </div>
         <div className="home__footer__cnt">
         <Link to={"/login"} className="form__cnt__login--link form__cnt__login--text home__footer__link" >Login</Link>
-        <Link to={"/login"} className="form__cnt__login--link form__cnt__login--text home__footer__link" aria-label="Footer link to signup" >Signup</Link>
+        <Link to={"/signup"} className="form__cnt__login--link form__cnt__login--text home__footer__link" aria-label="Footer link to signup" >Signup</Link>
         </div>
       </footer>
 
