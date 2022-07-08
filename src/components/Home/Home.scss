@@ -4,16 +4,265 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        height: 140vh;
-        background-color: $light-color;
-        
     }
     &__cnt {
         width: 100%;
-        
+
         & p {
             color: black;
+        }
+    }
+    &__hero {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-image: url("https://res.cloudinary.com/develop-daniel/image/upload/v1657248569/ATM-Purple-Hero-mid_hdffzg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        @media (min-width: $tablet-bkp) {
+            flex-direction: row;
+        }
+        &__cnt {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            @media (min-width: $tablet-bkp) {
+                width: 50%;
+                justify-content: flex-start;
+                align-items: center;
+            }
+            &--left {
+                align-items: flex-start;
+                @media (min-width: $tablet-bkp) {
+                    align-items: flex-end;
+                }
+            }
+            &--right {
+                @media (min-width: $tablet-bkp) {
+                    align-items: flex-start;
+                    justify-content: flex-end;
+                }
+            }
+        }
+        &__sub-cnt {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 50%;
+            margin-bottom: 10%;
+            &--left {
+                margin-top: 5%;
+                @media (min-width: $tablet-bkp) {
+                    align-items: center;
+                    justify-content: flex-end;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        &__title {
+            padding: 5%;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            @media (min-width: $tablet-bkp) {
+                font-size: 3rem;
+            }
+            @media (min-width: $desktop-bkp) {
+                font-size: 4rem;
+            }
+        }
+        &__icon {
+            color: white;
+            font-size: 4rem;
+            position: absolute;
+            bottom: 3rem;
+            right: 1rem;
+            @media (min-width: $tablet-bkp) {
+                bottom: 3rem;
+                right: 3rem;
+            }
+            &:hover {
+                color: $extra-color;
+            }
+        }
+    }
+    &__section-div {
+        &__root {
+            height: 20vh;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &__cnt {
+            width: 100%;
+        }
+        &__title {
+            color: $light-blue;
+            font-size: 3rem;
+            @media (min-width: $tablet-bkp) {
+                font-size: 4rem;
+            }
+        }
+    }
+
+    &__cards {
+        margin: 5% 0;
+        background-color: white;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media (min-width: $tablet-bkp) {
+            font-size: 3rem;
+            flex-direction: row;
+            height: 100vh;
+
+            justify-content: space-around;
+        }
+        &__cnt {
+            width: 80%;
+            height: 100%;
+            margin-bottom: 5%;
+            border: 0.2rem solid $light-blue;
+            transition: box-shadow 0.5 ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            @media (min-width: $tablet-bkp) {
+                width: 42%;
+                margin-bottom: 0;
+            }
+            &:hover {
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            }
+        }
+        &__sub-cnt {
+            margin-top: 5%;
+            width: 95%;
+            display: flex;
+            justify-content: center;
+            &--title {
+                margin-bottom: 10%;
+                height: 15%;
+            }
+            &--text {
+                width: 80%;
+                margin-bottom: 5%;
+            }
+            &--btn {
+                margin-top: 10%;
+            }
+        }
+        &__icon {
+            font-size: 6rem;
+            color: $dark-blue;
+        }
+        &__title {
+            font-size: 2rem;
+            color: $extra-color;
+            @media (min-width: $tablet-bkp) {
+                font-size: 3rem;
+            }
+        }
+        &__text {
+            font-size: 1.5rem;
+        }
+    }
+    //Info
+    &__info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 150vh;
+        @media (min-width: $tablet-bkp) {
+            height: 120vh;
+        }
+
+        &__up-cnt {
+            width: 100%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            @media (min-width: $tablet-bkp) {
+                flex-direction: row;
+                height: 100%;
+            }
+
+        }
+        &__sub-cnt {
+            width: 90%;
+            height: 50%;
+        }
+        &__cnt {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 60%;
+            @media (min-width: $tablet-bkp) {
+                width: 50%;
+                height: 100%;
+            }
+            &--info {
+                height: 40%;
+                
+                align-items: center;
+                justify-content: center;
+                @media (min-width: $tablet-bkp) {
+                    
+                    height: 100%;
+                }
+            }
+            
+        }
+        &__img {
+            width: 100%;
+            height: 100%;
+            &-over {
+                position: absolute;
+                bottom: 0;
+                right: 20vw;
+                width: 50%;
+                height: 40vh;
+            }
+        }
+        &__title {
+            font-size: 2.2rem;
+            margin-bottom: 10%;
+        }
+        &__text {
+            font-size: 1.2rem;
+        }
+    }
+    &__footer {
+        width: 100%;
+        height: 10vh;
+        border-top: 0.2rem solid $light-blue;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__cnt {
+            width: 50%;
+        }
+        &__text {
+            color: $light-blue;
+            font-size: 1.2rem;
+        }
+        &__link {
+            margin-left: 7.5%;
+            color: $light-blue;
         }
     }
 }

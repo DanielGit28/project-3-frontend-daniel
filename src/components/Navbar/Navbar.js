@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import { AiOutlineMenu, AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
-import {FaFacebookF} from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { IoMdClose } from 'react-icons/io';
 import { Link } from "react-router-dom";
 import { BreakpointContext } from "../App";
@@ -113,29 +113,29 @@ const Navbar = (props) => {
     return (
         <div className="nav__root" ref={navRoot}>
             {isNavOpen &&
-                        <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Close navbar button" onClick={() => { navOnClick(false) }} >
-                            <IoMdClose className="nav__cnt-activate__icon" />
-                        </button>
-                    }
-                    {isNavOpen === false &&
-                        <button className="nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Open navbar button" onClick={() => { navOnClick(true) }}>
-                            <AiOutlineMenu className="nav__cnt-activate__icon" />
-                        </button>
-                    }
+                <button className=" nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Close navbar button" onClick={() => { navOnClick(false) }} >
+                    <IoMdClose className="nav__cnt-activate__icon" />
+                </button>
+            }
+            {isNavOpen === false &&
+                <button className="nav__cnt-activate__icon-cnt nav__cnt-activate" aria-label="Open navbar button" onClick={() => { navOnClick(true) }}>
+                    <AiOutlineMenu className="nav__cnt-activate__icon" />
+                </button>
+            }
             <div className="nav__cnt-open" ref={navInfo}>
                 <div className="nav__cnt-open__info">
                     <header className="nav__cnt-open__header">
-                        
-                        <Link to={"/"} ref={navLogo} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link" ><p className="nav__cnt-open__logo">Konrad Bank</p></Link>
+
+                        <Link to={"/"} ref={navLogo} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link"  aria-label="Navbar link home"><p className="nav__cnt-open__logo">Konrad Bank</p></Link>
 
                     </header>
                     <div className="nav__cnt-open__links-cnt">
                         <ul className="nav__cnt-open__links">
                             <li>
-                                <Link to={"/login"} ref={navLogin} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link" >Login</Link>
+                                <Link to={"/login"} ref={navLogin} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link" aria-label="Navbar link to login">Login</Link>
                             </li>
                             <li>
-                                <Link to={"/signup"} ref={navSignup} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link" >Signup</Link>
+                                <Link to={"/signup"} ref={navSignup} onClick={() => { navOnClick(false) }} className="nav__cnt-open__links--link" aria-label="Navbar link to signup">Signup</Link>
                             </li>
                         </ul>
                     </div>
@@ -148,7 +148,7 @@ const Navbar = (props) => {
                                 <a href={"https://www.facebook.com/konradgroup/"} className="nav__cnt-open__social-links--link" aria-label="Konrad Bank Facebook Link" ><FaFacebookF /></a>
                             </li>
                             <li>
-                                <a href={"https://twitter.com/konradgroup"} className="nav__cnt-open__social-links--link"aria-label="Konrad Bank Twitter Link" ><AiOutlineTwitter /></a>
+                                <a href={"https://twitter.com/konradgroup"} className="nav__cnt-open__social-links--link" aria-label="Konrad Bank Twitter Link" ><AiOutlineTwitter /></a>
                             </li>
                         </ul>
                     </div>

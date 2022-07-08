@@ -1,4 +1,6 @@
+//Fonts
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Noto+Serif&display=swap');
 //Constants
 @import "./components/styles/constants/colors.scss";
 @import "./components/styles/constants/breakpoints.scss";
@@ -15,7 +17,7 @@
 @import "./components/Forms/FormDash.scss";
 @import "./components/FormInput/FormInput.scss";
 @import "./components/Navbar/Navbar.scss";
-@import "./components/SignUp/Signup.scss";
+
 @import "./components/Login/Login.scss";
 @import "./components/Home/Home.scss";
 @import "./components/BankHome/BankHome.scss";
@@ -42,7 +44,7 @@
 //Errors
 @import "./components/styles/errors.scss";
 
-
+@import "./components/SignUp/Signup.scss";
 
 //Base
 @import "./base.scss";

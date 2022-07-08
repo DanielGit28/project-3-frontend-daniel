@@ -4,7 +4,7 @@
     }
     &__error {
         width: 70%;
-        background-color: rgb(255, 73, 73);
+        background-color: #e22120;
         margin: 0% 0;
         //padding: 2%;
         text-align: center;
@@ -35,7 +35,7 @@
     }
     &__text {
         &--dash {
-            color: #e22120;
+            color: white;
         }
     }
     &__icon {
@@ -44,7 +44,7 @@
             font-size: 3rem;
         }
         & path {
-            fill: #e22120;
+            fill: white;
         }
     }
 }

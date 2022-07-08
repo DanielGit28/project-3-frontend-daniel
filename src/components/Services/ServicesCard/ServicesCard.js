@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MdOutlineNetworkWifi, MdOutlineDataSaverOn, MdElectricalServices, MdWater } from "react-icons/md";
+import {FaKey} from "react-icons/fa";
 import { GrLicense } from "react-icons/gr";
 import FormServices from "../../Forms/FormServices/FormServices";
 
@@ -37,14 +38,17 @@ const ServicesCard = (props) => {
 
 
     return (
-        <button className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
+        <div className={`service-card__root ${cardOpen && "service-card__root--unique"}`}>
             <div className="service-card__info" onClick={handleCardClick}>
                 <div className={`service-card__cnt service-card__cnt--left ${special && "service-card__cnt--left-special"} ${cardOpen && "service-card__cnt-special"}`}>
                     <div className="service-card__cnt-sub">
                         {serviceTitle === "Common services" && <MdElectricalServices className={`service-card__icon ${special && "service-card__icon--special"}`} />}
                         {serviceTitle === "Common services" && <MdWater className={`service-card__icon ${special && "service-card__icon--special"}`} />}
+
                         {serviceTitle === "Insurances" && <MdOutlineDataSaverOn className={`service-card__icon ${special && "service-card__icon--special"}`} />}
-                        {serviceTitle === "Permits" && <GrLicense className={`service-card__icon ${special && "service-card__icon--special-key"}`} />}
+
+                        {serviceTitle === "Permits" && <FaKey className={`service-card__icon ${special && "service-card__icon--special-key"}`} />}
+
                         {serviceTitle === "Digital services" && <MdOutlineNetworkWifi className={`service-card__icon ${special && "service-card__icon--special"}`} />}
                     </div>
 
@@ -61,7 +65,7 @@ const ServicesCard = (props) => {
             </div>
 
 
-        </button>
+        </div>
     );
 }
 

@@ -221,8 +221,8 @@ const FormServices = (props) => {
 
                     </div>}
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        <label className="form__label dash-form__label services-form__label" htmlFor="transfer-funds-origin-account-select">Origin account</label>
-                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id="transfer-funds-origin-account-select" aria-labelledby="transfer-funds-origin-account-select" name="transfer-funds-origin-account-select" >
+                        <label className="form__label dash-form__label services-form__label" htmlFor={`pay-service-select-account-${serviceTitle}`}>Origin account</label>
+                        <select className="form__form__select dash-form__select" value={accountSelected} onChange={handleDropdownChange} id={`pay-service-select-account-${serviceTitle}`} aria-labelledby={`pay-service-select-account-${serviceTitle}`} name={`pay-service-select-account-${serviceTitle}`} >
                             <option defaultValue disabled value={"Select the origin account:"}>Select the origin account:</option>
                             <option value={accountsInfo[0].accountNumber}>Colon account - {accountsInfo[0].accountNumber}</option>
                             <option value={accountsInfo[1].accountNumber}>Dollar account - {accountsInfo[1].accountNumber}</option>
@@ -232,8 +232,8 @@ const FormServices = (props) => {
 
 
                     <div className="form__form__cnt dash-form__form__cnt ">
-                        <label className="form__label dash-form__label services-form__label" htmlFor="services-service-select">Service</label>
-                        <select className="form__form__select dash-form__select" value={serviceSelected} onChange={handleDropdownsServiceChange} id="services-service-select" aria-labelledby="services-service-select" name="services-service-select" >
+                        <label className="form__label dash-form__label services-form__label" htmlFor={`pay-service-select-service-${serviceTitle}`}>Service</label>
+                        <select className="form__form__select dash-form__select" value={serviceSelected} onChange={handleDropdownsServiceChange} id={`pay-service-select-service-${serviceTitle}`} aria-labelledby={`pay-service-select-service-${serviceTitle}`} name={`pay-service-select-service-${serviceTitle}`} >
                             <option defaultValue disabled value={"Select the service:"}>Select the service:</option>
                             {serviceTypes.map((service, index) => {
                                 return <option value={service} key={index}>{service}</option>;

@@ -2,6 +2,7 @@
     &__root {
         //background-color: $light-blue;
         background-color: white;
+        border: 0.3rem solid $light-blue;
         @media (min-width: $tablet-bkp) {
             width: 65%;
         }
@@ -124,6 +125,7 @@
     }
     &__error {
         width: 90%;
+        background-color: #e22120;
         &--color {
             color: #e22120;
         }

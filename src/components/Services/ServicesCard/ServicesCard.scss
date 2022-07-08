@@ -45,6 +45,7 @@
             font-weight: bold;
             padding: 2%;
             width: 85%;
+            text-align: center;
             @media (min-width: 400px) {
                 font-size: 1.3rem;
             }
@@ -99,10 +100,11 @@
 
     &__icon {
         font-size: 5rem;
-
+        fill: black;
+        
         &--special {
             color: white;
-
+            fill: white;
             &-key {
                 & path {
                     fill: white;

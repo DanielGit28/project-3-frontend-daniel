@@ -26,7 +26,7 @@ const App = (props) => {
         <div className="app__info">
           {container === "Home" &&
             <div className="app__cnt" >
-              <Home />
+              <Home navOpen={navOpen}/>
             </div>
           }
           {container === "Login" &&

@@ -39,7 +39,7 @@ const Profile = (props) => {
         return (
             <div className="profile__root">
                 <div ref={imgCnt} className="profile__cnt profile__cnt__img">
-                    <img src={userInfo.photoId} className="profile__img" />
+                    <img src={userInfo.photoId} className="profile__img" alt="User profile"/>
                 </div>
                 <div className="profile__card__cnt">
                     <div className="profile__card__sub-cnt">
